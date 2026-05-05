@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IR NETLIFY CONFIG GENERATOR V7.2</title>
+    <title>IR NETLIFY CONFIG GENERATOR V7.4</title>
     <style>
         :root {
             --theme-netlify: #00cfff; 
@@ -147,10 +147,10 @@
         }
 
         .tutorial-link {
-            color: var(--theme-netlify);
+            color: var(--neon-green);
             text-decoration: none;
             font-size: 0.6rem;
-            border: 1px solid rgba(0, 207, 255, 0.3);
+            border: 2px solid rgba(0, 80, 40, 0.9);
             padding: 2px 8px;
             border-radius: 4px;
             transition: 0.3s;
@@ -158,7 +158,7 @@
         }
 
         .tutorial-link:hover {
-            background: rgba(0, 207, 255, 0.1);
+            background: rgba(0, 255, 40, 0.1);
         }
 
         input[type="text"], textarea {
@@ -308,7 +308,7 @@
 <body>
 
 <div class="container">
-    <h2>IR NETLIFY<br>CONFIG GENERATOR V7.2</h2>
+    <h2>IR NETLIFY<br>CONFIG GENERATOR V7.4</h2>
 
     <div class="tabs">
         <button class="tab-btn active" id="tab-netlify">Netlify</button>
@@ -356,7 +356,7 @@
 
     <div class="input-group" id="ip-group">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-            <label style="margin: 0; color: var(--neon-green);">IP</label>
+            <label style="margin: 0; color: var(--theme-netlify);">IP</label>
             <div style="display: flex; gap: 5px;">
                 <button class="action-btn btn-default-action" onclick="loadDefaultIps()">Default</button>
                 <button class="action-btn btn-clear" onclick="document.getElementById('ip-list').value = ''">Clear</button>
