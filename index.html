@@ -1,998 +1,1170 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta content="width=device-width, initial-scale=1.0" name="viewport">
-	<title>IR NETLIFY CONFIG GENERATOR V8.2</title>
-	<style>
-	          :root {
-	              --theme-netlify: #00e1ff; 
-	              --neon-red: #ff0000;      
-	              --neon-orange: #ff9100;   
-	              --neon-green: #00c40d;            
-	              --dark-bg: #0a0b10;
-	              --card-bg: #161b22;
-	              --text-color: #e6edf3;
-	              --scroll-thumb: #30363d;
-	              --current-theme: var(--theme-netlify);
-	          }
+	<head>
+		<meta charset="UTF-8">
+		<meta content="width=device-width, initial-scale=1.0" name="viewport">
+		<title>IR NETLIFY CONFIG GENERATOR V8.4</title>
+		<style>
+			:root {
+				--theme-netlify: #00e1ff;
+				--neon-red: #ff0000;
+				--neon-orange: #ff9100;
+				--neon-green: #00c40d;
+				--dark-bg: #0a0b10;
+				--card-bg: #161b22;
+				--text-color: #e6edf3;
+				--scroll-thumb: #30363d;
+				--current-theme: var(--theme-netlify);
+			}
 
-	          ::-webkit-scrollbar { width: 8px; }
-	          ::-webkit-scrollbar-track { background: var(--dark-bg); }
-	          ::-webkit-scrollbar-thumb {
-	              background: var(--scroll-thumb);
-	              border-radius: 10px;
-	              border: 2px solid var(--dark-bg);
-	          }
-	          ::-webkit-scrollbar-thumb:hover { background: var(--current-theme); }
+			::-webkit-scrollbar {
+				width: 8px;
+			}
 
-	          body {
-	              font-family: 'Segoe UI', Roboto, sans-serif;
-	              background-color: var(--dark-bg);
-	              color: var(--text-color);
-	              display: flex;
-	              justify-content: center;
-	              align-items: center;
-	              min-height: 100vh;
-	              margin: 0;
-	              flex-direction: column;
-	              padding: 20px;
-	              box-sizing: border-box;
-	          }
+			::-webkit-scrollbar-track {
+				background: var(--dark-bg);
+			}
 
-	          body::before {
-	              content: "";
-	              position: absolute;
-	              width: 400px;
-	              height: 400px;
-	              background: var(--current-theme);
-	              filter: blur(180px);
-	              opacity: 0.05; 
-	              z-index: -1;
-	              top: 5%;
-	              right: 5%;
-	              transition: background 0.4s ease;
-	          }
+			::-webkit-scrollbar-thumb {
+				background: var(--scroll-thumb);
+				border-radius: 10px;
+				border: 2px solid var(--dark-bg);
+			}
 
-	          .container {
-	              background-color: var(--card-bg);
-	              padding: 30px;
-	              border-radius: 20px;
-	              border: 1px solid #30363d;
-	              box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-	              width: 90%;
-	              max-width: 420px;
-	              position: relative;
-	              box-sizing: border-box;
-	          }
+			::-webkit-scrollbar-thumb:hover {
+				background: var(--current-theme);
+			}
 
-	          h2 { 
-	              color: var(--current-theme); 
-	              text-align: center;
-	              text-transform: uppercase;
-	              margin-bottom: 20px;
-	              font-size: 1.1rem;
-	              transition: color 0.4s ease;
-	          }
+			body {
+				font-family: 'Segoe UI', Roboto, sans-serif;
+				background-color: var(--dark-bg);
+				color: var(--text-color);
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				min-height: 100vh;
+				margin: 0;
+				flex-direction: column;
+				padding: 20px;
+				box-sizing: border-box;
+			}
 
-	          .tabs, #netlify-options, #netlify-config-type {
-	              display: flex;
-	              flex-direction: row-reverse;
-	              gap: 10px;
-	              margin-bottom: 20px;
-	              padding-bottom: 15px;
-	          }
+			body::before {
+				content: "";
+				position: absolute;
+				width: 400px;
+				height: 400px;
+				background: var(--current-theme);
+				filter: blur(180px);
+				opacity: 0.05;
+				z-index: -1;
+				top: 5%;
+				right: 5%;
+				transition: background 0.4s ease;
+			}
 
-	          .tabs { border-bottom: 1px solid #30363d; }
+			.container {
+				background-color: var(--card-bg);
+				padding: 30px;
+				border-radius: 20px;
+				border: 1px solid #30363d;
+				box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+				width: 90%;
+				max-width: 420px;
+				position: relative;
+				box-sizing: border-box;
+			}
 
-	          #netlify-options, #netlify-config-type {
-	              display: none;
-	              flex-direction: row-reverse; 
-	              gap: 10px;
-	              margin-bottom: 5px;
-	              animation: fadeIn 0.3s ease;
-	          }
+			h2 {
+				color: var(--current-theme);
+				text-align: center;
+				text-transform: uppercase;
+				margin-bottom: 20px;
+				font-size: 1.1rem;
+				transition: color 0.4s ease;
+			}
 
-	          #custom-settings {
-	              display: none;
-	              border: 1px dashed var(--neon-orange);
-	              padding: 15px;
-	              border-radius: 12px;
-	              margin-bottom: 15px;
-	              background: rgba(255, 145, 0, 0.02);
-	          }
+			.tabs,
+			#netlify-options,
+			#netlify-config-type {
+				display: flex;
+				flex-direction: row-reverse;
+				gap: 10px;
+				margin-bottom: 20px;
+				padding-bottom: 15px;
+			}
 
-	          @keyframes fadeIn {
-	              from { opacity: 0; transform: translateY(-5px); }
-	              to { opacity: 1; transform: translateY(0); }
-	          }
+			.tabs {
+				border-bottom: 1px solid #30363d;
+			}
 
-	          .tab-btn, .sub-tab-btn {
-	              position: relative;
-	              flex: 1;
-	              padding: 10px;
-	              background: rgba(255, 255, 255, 0.03);
-	              border: 1px solid #30363d;
-	              color: #8b949e;
-	              border-radius: 8px;
-	              cursor: pointer;
-	              font-weight: bold;
-	              transition: all 0.3s;
-	              text-transform: uppercase;
-	              font-size: 0.7rem;
-	          }
+			#netlify-options,
+			#netlify-config-type {
+				display: none;
+				flex-direction: row-reverse;
+				gap: 10px;
+				margin-bottom: 5px;
+				animation: fadeIn 0.3s ease;
+			}
 
-	          .tab-btn:hover, .sub-tab-btn:hover {
-	              background: rgba(255, 255, 255, 0.05);
-	              color: var(--text-color);
-	          }
+			#custom-settings {
+				display: none;
+				border: 1px dashed var(--neon-orange);
+				padding: 15px;
+				border-radius: 12px;
+				margin-bottom: 15px;
+				background: rgba(255, 145, 0, 0.02);
+			}
 
-	          #tab-netlify.active { border-color: var(--theme-netlify); color: var(--theme-netlify); background: rgba(0, 207, 255, 0.15); box-shadow: 0 0 10px rgba(0, 207, 255, 0.5);}
-	          #btn-shecan.active { 
-	              border-color: var(--theme-netlify); 
-	              color: var(--theme-netlify); 
-	              background: rgba(0, 207, 255, 0.15); 
-	              box-shadow: 0 0 7px rgba(0, 207, 255, 0.3);
-	          }
+			@keyframes fadeIn {
+				from {
+					opacity: 0;
+					transform: translateY(-5px);
+				}
 
-	          #btn-normal.active { 
-	              border-color: var(--theme-netlify); 
-	              color: var(--theme-netlify); 
-	              background: rgba(0, 207, 255, 0.15); 
-	              box-shadow: 0 0 7px rgba(0, 207, 255, 0.3);
-	          }
-	          #btn-custom.active { border-color: var(--neon-orange); color: var(--neon-orange); background: rgba(255, 170, 0, 0.13); 
-	              box-shadow: 0 0 7px rgba(225, 117, 0, 0.3);}
-	          #btn-default.active { border-color: var(--theme-netlify); color: var(--theme-netlify); background: rgba(0, 207, 255, 0.10); 
-	              box-shadow: 0 0 7px rgba(0, 207, 255, 0.3); }
+				to {
+					opacity: 1;
+					transform: translateY(0);
+				}
+			}
 
-	          .input-group { margin-bottom: 15px; }
+			.tab-btn,
+			.sub-tab-btn {
+				position: relative;
+				flex: 1;
+				padding: 10px;
+				background: rgba(255, 255, 255, 0.03);
+				border: 1px solid #30363d;
+				color: #8b949e;
+				border-radius: 8px;
+				cursor: pointer;
+				font-weight: bold;
+				transition: all 0.3s;
+				text-transform: uppercase;
+				font-size: 0.7rem;
+			}
 
-	          label { 
-	              font-size: 0.7rem;
-	              color: var(--current-theme);
-	              font-weight: bold;
-	              text-transform: uppercase;
-	              display: block;
-	              margin-bottom: 8px;
-	              transition: color 0.4s ease;
-	          }
+			.tab-btn:hover,
+			.sub-tab-btn:hover {
+				background: rgba(255, 255, 255, 0.05);
+				color: var(--text-color);
+			}
 
-	          .tutorial-link {
-	              color: var(--neon-green);
-	              text-decoration: none;
-	              font-size: 0.6rem;
-	              border: 2px solid rgba(0, 80, 40, 0.9);
-	              padding: 2px 8px;
-	              border-radius: 8px;
-	              transition: 0.3s;
-	              display: none;
-	          }
+			#tab-netlify.active {
+				border-color: var(--theme-netlify);
+				color: var(--theme-netlify);
+				background: rgba(0, 207, 255, 0.15);
+				box-shadow: 0 0 10px rgba(0, 207, 255, 0.5);
+			}
 
-	          .tutorial-link:hover {
-	              background: rgba(0, 255, 40, 0.1);
-	          }
+			#btn-shecan.active {
+				border-color: var(--theme-netlify);
+				color: var(--theme-netlify);
+				background: rgba(0, 207, 255, 0.15);
+				box-shadow: 0 0 7px rgba(0, 207, 255, 0.3);
+			}
 
-	          input[type="text"], textarea {
-	              width: 100%;
-	              padding: 12px;
-	              background: #0d1117;
-	              border: 1px solid #30363d;
-	              border-radius: 10px;
-	              color: white;
-	              box-sizing: border-box;
-	              font-family: 'Consolas', monospace;
-	              font-size: 0.8rem;
-	              transition: all 0.3s;
-	              resize: vertical;
-	          }
+			#btn-normal.active {
+				border-color: var(--theme-netlify);
+				color: var(--theme-netlify);
+				background: rgba(0, 207, 255, 0.15);
+				box-shadow: 0 0 7px rgba(0, 207, 255, 0.3);
+			}
 
-	          input:focus, textarea:focus {
-	              outline: none;
-	              border-color: var(--current-theme);
-	              box-shadow: 0 0 8px rgba(255, 255, 255, 0.05);
-	          }
+			#btn-custom.active {
+				border-color: var(--neon-orange);
+				color: var(--neon-orange);
+				background: rgba(255, 170, 0, 0.13);
+				box-shadow: 0 0 7px rgba(225, 117, 0, 0.3);
+			}
 
-	          .action-btn {
-	              background: transparent;
-	              padding: 4px 10px;
-	              border-radius: 6px;
-	              cursor: pointer;
-	              font-size: 0.65rem;
-	              font-weight: bold;
-	              text-transform: uppercase;
-	              transition: 0.3s;
-	          }
+			#btn-default.active {
+				border-color: var(--theme-netlify);
+				color: var(--theme-netlify);
+				background: rgba(0, 207, 255, 0.10);
+				box-shadow: 0 0 7px rgba(0, 207, 255, 0.3);
+			}
 
-	          .btn-default-action { color: var(--neon-orange); border: 1px solid var(--neon-orange); }
-	          .btn-clear { color: var(--neon-red); border: 1px solid var(--neon-red); }
-	          .btn-copy { color: #3fb950; border: 1px solid #3fb950; }
+			.input-group {
+				margin-bottom: 15px;
+			}
 
-	          .gen-btn {
-	              position: relative;
-	              background: transparent;
-	              color: var(--neon-green);
-	              border: 2px solid var(--neon-green);
-	              padding: 12px;
-	              border-radius: 12px;
-	              cursor: pointer;
-	              width: 100%;
-	              font-weight: bold;
-	              margin-top: 15px;
-	              text-transform: uppercase;
-	              transition: all 0.3s ease;
-	          }
+			label {
+				font-size: 0.7rem;
+				color: var(--current-theme);
+				font-weight: bold;
+				text-transform: uppercase;
+				display: block;
+				margin-bottom: 8px;
+				transition: color 0.4s ease;
+			}
 
-	          .gen-btn:hover { background-color: var(--neon-green); color: #000; }
+			.tutorial-link {
+				color: var(--neon-green);
+				text-decoration: none;
+				font-size: 0.6rem;
+				border: 2px solid rgba(0, 80, 40, 0.9);
+				padding: 2px 8px;
+				border-radius: 8px;
+				transition: 0.3s;
+				display: none;
+			}
 
-	          .gen-balanced-btn {
-	              position: relative;
-	              background: transparent;
-	              color: var(--neon-orange);
-	              border: 2px solid var(--neon-orange);
-	              padding: 12px;
-	              border-radius: 12px;
-	              cursor: pointer;
-	              width: 100%;
-	              font-weight: bold;
-	              margin-top: 10px;
-	              text-transform: uppercase;
-	              transition: all 0.3s ease;
-	          }
+			.tutorial-link:hover {
+				background: rgba(0, 255, 40, 0.1);
+			}
 
-	          .gen-balanced-btn:hover {
-	              background-color: var(--neon-orange);
-	              color: #000;
-	              box-shadow: 0 0 15px rgba(255, 145, 0, 0.4);
-	          }
+			input[type="text"],
+			textarea {
+				width: 100%;
+				padding: 12px;
+				background: #0d1117;
+				border: 1px solid #30363d;
+				border-radius: 10px;
+				color: white;
+				box-sizing: border-box;
+				font-family: 'Consolas', monospace;
+				font-size: 0.8rem;
+				transition: all 0.3s;
+				resize: vertical;
+			}
 
-	          #output-container, #balanced-output { 
-	              margin-top: 25px; 
-	              display: none; 
-	              animation: slideUp 0.3s ease-out;
-	          }
+			input:focus,
+			textarea:focus {
+				outline: none;
+				border-color: var(--current-theme);
+				box-shadow: 0 0 8px rgba(255, 255, 255, 0.05);
+			}
 
-	          .balanced-panel {
-	              background: rgba(0, 0, 0, 0.3);
-	              border: 1px solid #30363d;
-	              border-radius: 12px;
-	              padding: 15px;
-	          }
+			.action-btn {
+				background: transparent;
+				padding: 4px 10px;
+				border-radius: 6px;
+				cursor: pointer;
+				font-size: 0.65rem;
+				font-weight: bold;
+				text-transform: uppercase;
+				transition: 0.3s;
+			}
 
-	          .switch-container {
-	              display: flex;
-	              background: transparent;
-	              gap: 10px; 
-	              margin-bottom: 15px;
-	          }
+			.btn-default-action {
+				color: var(--neon-orange);
+				border: 1px solid var(--neon-orange);
+			}
 
-	          .switch-btn {
-	              flex: 1;
-	              padding: 10px;
-	              background: rgba(255, 255, 255, 0.03);
-	              border: 1px solid #30363d;
-	              color: #8b949e;
-	              border-radius: 8px;
-	              cursor: pointer;
-	              font-weight: bold;
-	              transition: all 0.3s;
-	              text-transform: uppercase;
-	              font-size: 0.65rem;
-	          }
+			.btn-clear {
+				color: var(--neon-red);
+				border: 1px solid var(--neon-red);
+			}
 
-	          .switch-btn.active {
-	              border-color: var(--neon-orange);
-	              color: var(--neon-orange);
-	              background: rgba(255, 145, 0, 0.13); 
-	          }
+			.btn-copy {
+				color: #00c40d;
+				border: 1px solid #00c40d;
+			}
 
-	          @keyframes slideUp {
-	              from { opacity: 0; transform: translateY(10px); }
-	              to { opacity: 1; transform: translateY(0); }
-	          }
+			.gen-btn {
+				position: relative;
+				background: transparent;
+				color: var(--neon-green);
+				border: 2px solid var(--neon-green);
+				padding: 12px;
+				border-radius: 12px;
+				cursor: pointer;
+				width: 100%;
+				font-weight: bold;
+				margin-top: 15px;
+				text-transform: uppercase;
+				transition: all 0.3s ease;
+			}
 
-	          .success-header {
-	              display: flex;
-	              justify-content: space-between;
-	              align-items: center;
-	              margin-bottom: 10px;
-	          }
+			.gen-btn:hover {
+				background-color: var(--neon-green);
+				color: #000;
+			}
 
-	          #result-area { border-color: #3fb950; color: #3fb950; min-height: 150px; }
+			.gen-balanced-btn {
+				position: relative;
+				background: transparent;
+				color: var(--neon-orange);
+				border: 2px solid var(--neon-orange);
+				padding: 12px;
+				border-radius: 12px;
+				cursor: pointer;
+				width: 100%;
+				font-weight: bold;
+				margin-top: 10px;
+				text-transform: uppercase;
+				transition: all 0.3s ease;
+			}
 
-	          .footer { margin-top: 25px; }
-	          .footer-link {
-	              color: rgba(255, 255, 255, 0.3);
-	              text-decoration: none;
-	              font-size: 0.8rem;
-	              border: 1px solid #30363d;
-	              padding: 7px 18px;
-	              border-radius: 50px;
-	              transition: 0.3s;
-	          }
-	          .footer-link:hover { color: var(--current-theme); border-color: var(--current-theme); }
-	          textarea::-webkit-resizer {
-	              background-color: var(--dark-bg); 
-	              border: 1px solid var(--card-bg);
-	              outline: 1px solid var(--dark-bg); 
-	              box-shadow: 0 0 2px var(--dark-bg);
-	          }
-	          
-	              .error-border {
-	              border: 3px solid var(--neon-red) !important;
-	              box-shadow: 0 0 10px rgba(255, 0, 0, 0.9) !important;
-	              animation: shake 0.3s ease-in-out;
-	          }
+			.gen-balanced-btn:hover {
+				background-color: var(--neon-orange);
+				color: #000;
+				box-shadow: 0 0 15px rgba(255, 145, 0, 0.4);
+			}
 
-	          @keyframes shake {
-	              0% { transform: translateX(0); }
-	              25% { transform: translateX(-5px); }
-	              50% { transform: translateX(5px); }
-	              75% { transform: translateX(-5px); }
-	              100% { transform: translateX(0); }
-	          }
-	          .btn-paste {
-	      color: var(--theme-netlify);
-	      border: 1px solid var(--theme-netlify);
-	   }
+			#output-container,
+			#balanced-output {
+				margin-top: 25px;
+				display: none;
+				animation: slideUp 0.3s ease-out;
+			}
 
-	   .btn-default-action:hover {
-	      background: rgba(255, 145, 0, 0.15);
-	      box-shadow: 0 0 8px rgba(255, 145, 0, 0.4);
-	   }
+			.balanced-panel {
+				background: rgba(0, 0, 0, 0.3);
+				border: 1px solid #30363d;
+				border-radius: 12px;
+				padding: 15px;
+			}
 
-	   .btn-clear:hover {
-	      background: rgba(255, 68, 68, 0.15);
-	      box-shadow: 0 0 8px rgba(255, 68, 68, 0.4);
-	   }
+			.switch-container {
+				display: flex;
+				background: transparent;
+				gap: 10px;
+				margin-bottom: 15px;
+			}
 
-	   .btn-paste:hover {
-	      background: rgba(0, 207, 255, 0.15);
-	      box-shadow: 0 0 8px rgba(0, 207, 255, 0.4);
-	   }
+			.switch-btn {
+				flex: 1;
+				padding: 10px;
+				background: rgba(255, 255, 255, 0.03);
+				border: 1px solid #30363d;
+				color: #8b949e;
+				border-radius: 8px;
+				cursor: pointer;
+				font-weight: bold;
+				transition: all 0.3s;
+				text-transform: uppercase;
+				font-size: 0.65rem;
+			}
 
-	   .action-btn:active {
-	      transform: scale(0.92);
-	   }
+			.switch-btn.active {
+				border-color: var(--neon-orange);
+				color: var(--neon-orange);
+				background: rgba(255, 145, 0, 0.13);
+			}
 
+			@keyframes slideUp {
+				from {
+					opacity: 0;
+					transform: translateY(10px);
+				}
 
-	   .info-icon {
-	      position: absolute; 
-	      right: 8px;      
-	      top: 50%;         
-	      transform: translateY(-50%); 
-	      
-	      display: inline-flex;
-	      justify-content: center;
-	      align-items: center;
-	      width: 10px;
-	      height: 10px;
-	      border-radius: 30%;
-	      background: rgba(255, 255, 255, 0.05);
-	      color: var(--neon-green);
-	      font-size: 7px;
-	      cursor: pointer;
-	      transition: all 0.3s ease;
-	      border: 1px solid var(--neon-green);
-	   }
-	   .info-icon:hover {
-	      background: var(--neon-green);
-	      color: #000;
-	      border-color: var(--neon-green);
-	      box-shadow: 0 0 20px var(--neon-green);
-	   }
+				to {
+					opacity: 1;
+					transform: translateY(0);
+				}
+			}
 
-	   .info-modal-overlay {
-	      display: none;
-	      position: fixed;
-	      top: 0; left: 0; width: 100%; height: 100%;
-	      background: rgba(10, 11, 16, 0.85);
-	      backdrop-filter: blur(5px);
-	      z-index: 1000;
-	      justify-content: center;
-	      align-items: center;
-	      opacity: 0;
-	   }
-	   .info-modal-overlay.active {
-	      display: flex;
-	      animation: fadeInModal 0.3s forwards;
-	   }
-	   @keyframes fadeInModal {
-	      from { opacity: 0; transform: scale(0.95); }
-	      to { opacity: 1; transform: scale(1); }
-	   }
-	   .info-modal-content {
-	      background-color: var(--card-bg);
-	      border: 2px solid var(--theme-netlify);
-	      border-radius: 20px;
-	      padding: 25px;
-	      width: calc(100% - 20px); 
-	      max-width: 400px; 
-	      margin: 10px; 
-	      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 15px rgba(0, 207, 255, 0.1);
-	      position: relative;
-	      direction: rtl;
-	      text-align: right;
-	      line-height: 1.8;
-	      font-size: 0.85rem;
-	      max-height: 85vh; 
-	      overflow-y: auto;
-	   }
-	   .info-modal-content h3 {
-	      color: var(--theme-netlify);
-	      margin-top: 0;
-	      border-bottom: 2px solid #00e1ff;
-	      padding-bottom: 10px;
-	      direction: ltr; 
-	      text-align: left;
-	   }
-	   .info-modal-close {
-	      position: absolute;
-	      top: 15px;
-	      right: 15px;
-	      background: transparent;
-	      border: none;
-	      color: var(--neon-red);
-	      font-size: 1.5rem;
-	      cursor: pointer;
-	      transition: 0.3s;
-	   }
-	   .info-modal-close:hover { text-shadow: 0 0 8px var(--neon-red); }
-	   .warning-text { color: var(--neon-orange); font-weight: bold; }
+			.success-header {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				margin-bottom: 10px;
+			}
 
-	</style>
-</head>
-<body>
-	<div class="container">
-		<h2>IR NETLIFY<br>
-		CONFIG GENERATOR V8.2</h2>
-		<div class="tabs">
-			<button class="tab-btn active" id="tab-netlify">Netlify<span class="info-icon" onclick="showInfo(event, 'netlify')">?</span></button>
-		</div>
-		<div id="netlify-options">
-			<button class="sub-tab-btn" id="btn-shecan" onclick="setNetlifyMode('shecan')">IP + SNI<span class="info-icon" onclick="showInfo(event, 'ip_sni')">?</span></button> <button class="sub-tab-btn" id="btn-normal" onclick="setNetlifyMode('normal')">Direct SNI <span class="info-icon" onclick="showInfo(event, 'direct_sni')">?</span></button>
-		</div>
-		<div id="netlify-config-type">
-			<button class="sub-tab-btn" id="btn-custom" onclick="setConfigMode('custom')">Your Server<span class="info-icon" onclick="showInfo(event, 'custom')">?</span></button> <button class="sub-tab-btn" id="btn-default" onclick="setConfigMode('default')">Parsa Server <span class="info-icon" onclick="showInfo(event, 'parsa')">?</span></button>
-		</div>
-		<div id="custom-settings">
-			<div class="input-group">
-				<label style="color: var(--neon-orange);">Custom User (UUID)</label> <input id="custom-user" placeholder="your-uuid-here" type="text">
+			#result-area {
+				border-color: #00c40d;
+				color: #00c40d;
+				min-height: 150px;
+			}
+
+			.footer {
+				margin-top: 25px;
+			}
+
+			.footer-link {
+				color: rgba(255, 255, 255, 0.3);
+				text-decoration: none;
+				font-size: 0.8rem;
+				border: 1px solid #30363d;
+				padding: 7px 18px;
+				border-radius: 50px;
+				transition: 0.3s;
+			}
+
+			.footer-link:hover {
+				color: var(--current-theme);
+				border-color: var(--current-theme);
+			}
+
+			textarea::-webkit-resizer {
+				background-color: var(--dark-bg);
+				border: 1px solid var(--card-bg);
+				outline: 1px solid var(--dark-bg);
+				box-shadow: 0 0 2px var(--dark-bg);
+			}
+
+			.error-border {
+				border: 3px solid var(--neon-red) !important;
+				box-shadow: 0 0 10px rgba(255, 0, 0, 0.9) !important;
+				animation: shake 0.3s ease-in-out;
+			}
+
+			@keyframes shake {
+				0% {
+					transform: translateX(0);
+				}
+
+				25% {
+					transform: translateX(-5px);
+				}
+
+				50% {
+					transform: translateX(5px);
+				}
+
+				75% {
+					transform: translateX(-5px);
+				}
+
+				100% {
+					transform: translateX(0);
+				}
+			}
+
+			.btn-paste {
+				color: var(--theme-netlify);
+				border: 1px solid var(--theme-netlify);
+			}
+
+			.btn-default-action:hover {
+				background: rgba(255, 145, 0, 0.15);
+				box-shadow: 0 0 8px rgba(255, 145, 0, 0.4);
+			}
+
+			.btn-clear:hover {
+				background: rgba(255, 68, 68, 0.15);
+				box-shadow: 0 0 8px rgba(255, 68, 68, 0.4);
+			}
+
+			.btn-paste:hover {
+				background: rgba(0, 207, 255, 0.15);
+				box-shadow: 0 0 8px rgba(0, 207, 255, 0.4);
+			}
+
+			.action-btn:active {
+				transform: scale(0.92);
+			}
+
+			.info-icon {
+				position: absolute;
+				right: 8px;
+				top: 50%;
+				transform: translateY(-50%);
+				display: inline-flex;
+				justify-content: center;
+				align-items: center;
+				width: 10px;
+				height: 10px;
+				border-radius: 30%;
+				background: rgba(255, 255, 255, 0.05);
+				color: var(--neon-green);
+				font-size: 7px;
+				cursor: pointer;
+				transition: all 0.3s ease;
+				border: 1px solid var(--neon-green);
+			}
+
+			.info-icon:hover {
+				background: var(--neon-green);
+				color: #000;
+				border-color: var(--neon-green);
+				box-shadow: 0 0 20px var(--neon-green);
+			}
+
+			.info-modal-overlay {
+				display: none;
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background: rgba(10, 11, 16, 0.85);
+				backdrop-filter: blur(5px);
+				z-index: 1000;
+				justify-content: center;
+				align-items: center;
+				opacity: 0;
+			}
+
+			.info-modal-overlay.active {
+				display: flex;
+				animation: fadeInModal 0.3s forwards;
+			}
+
+			@keyframes fadeInModal {
+				from {
+					opacity: 0;
+					transform: scale(0.95);
+				}
+
+				to {
+					opacity: 1;
+					transform: scale(1);
+				}
+			}
+
+			.info-modal-content {
+				background-color: var(--card-bg);
+				border: 2px solid var(--theme-netlify);
+				border-radius: 20px;
+				padding: 25px;
+				width: calc(100% - 20px);
+				max-width: 400px;
+				margin: 10px;
+				box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 15px rgba(0, 207, 255, 0.1);
+				position: relative;
+				direction: rtl;
+				text-align: right;
+				line-height: 1.8;
+				font-size: 0.85rem;
+				max-height: 85vh;
+				overflow-y: auto;
+			}
+
+			.info-modal-content h3 {
+				color: var(--theme-netlify);
+				margin-top: 0;
+				border-bottom: 2px solid #00e1ff;
+				padding-bottom: 10px;
+				direction: ltr;
+				text-align: left;
+			}
+
+			.info-modal-close {
+				position: absolute;
+				top: 15px;
+				right: 15px;
+				background: transparent;
+				border: none;
+				color: var(--neon-red);
+				font-size: 1.5rem;
+				cursor: pointer;
+				transition: 0.3s;
+			}
+
+			.info-modal-close:hover {
+				text-shadow: 0 0 8px var(--neon-red);
+			}
+
+			.warning-text {
+				color: var(--neon-orange);
+				font-weight: bold;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<h2>IR NETLIFY <br> CONFIG GENERATOR V8.4 </h2>
+			<div class="tabs">
+				<button class="tab-btn active" id="tab-netlify">Netlify <span class="info-icon" onclick="showInfo(event, 'netlify')">?</span>
+				</button>
 			</div>
-			<div class="input-group">
-				<label style="color: var(--neon-orange);">Custom Path</label> <input id="custom-path" placeholder="/aaaaa" type="text">
+			<div id="netlify-options">
+				<button class="sub-tab-btn" id="btn-shecan" onclick="setNetlifyMode('shecan')">IP + SNI <span class="info-icon" onclick="showInfo(event, 'ip_sni')">?</span>
+				</button>
+				<button class="sub-tab-btn" id="btn-normal" onclick="setNetlifyMode('normal')">Direct SNI <span class="info-icon" onclick="showInfo(event, 'direct_sni')">?</span>
+				</button>
 			</div>
-		</div>
-		<div class="input-group">
-			<label id="host-label" style="display: flex; justify-content: space-between; align-items: center;"><span>Netlify Domain</span> <a class="tutorial-link" href="https://t.me/IR_NETLIFY/7" id="tutorial-link" target="_blank">GET Netlify Domain</a></label> <input id="main-host" oninput="this.value = this.value.replace(/[^a-zA-Z0-9./:-]/g, '')" placeholder="example.netlify.app" type="text">
-		</div>
-		<div class="input-group">
-			<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-				<label style="margin: 0;">SNI</label>
-				<div style="display: flex; gap: 5px;">
-					<button class="action-btn btn-default-action" onclick="loadDefaultDomains()">Default</button> <button class="action-btn btn-clear" onclick="document.getElementById('domain-list').value = ''">Clear</button> <button class="action-btn btn-paste" onclick="pasteToArea('domain-list')">Paste</button>
+			<div id="netlify-config-type">
+				<button class="sub-tab-btn" id="btn-custom" onclick="setConfigMode('custom')">Your Server <span class="info-icon" onclick="showInfo(event, 'custom')">?</span>
+				</button>
+				<button class="sub-tab-btn" id="btn-default" onclick="setConfigMode('default')">Parsa Server <span class="info-icon" onclick="showInfo(event, 'parsa')">?</span>
+				</button>
+			</div>
+			<div id="custom-settings">
+				<div class="input-group">
+					<label style="color: var(--neon-orange);">Custom User (UUID)</label>
+					<input id="custom-user" placeholder="your-uuid-here" type="text">
+				</div>
+				<div class="input-group">
+					<label style="color: var(--neon-orange);">Custom Path</label>
+					<input id="custom-path" placeholder="/aaaaa" type="text">
 				</div>
 			</div>
-			<textarea id="domain-list" placeholder="Enter SNI line by line..." rows="6"></textarea>
-		</div>
-		<div class="input-group" id="ip-group">
-			<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-				<label style="margin: 0; color: var(--theme-netlify);">IP</label>
-				<div style="display: flex; gap: 5px;">
-					<button class="action-btn btn-default-action" onclick="loadDefaultIps()">Default</button> <button class="action-btn btn-clear" onclick="document.getElementById('ip-list').value = ''">Clear</button> <button class="action-btn btn-paste" onclick="pasteToArea('ip-list')">Paste</button>
+			<div class="input-group">
+				<label id="host-label" style="display: flex; justify-content: space-between; align-items: center;">
+					<span>Netlify Domain</span>
+					<a class="tutorial-link" href="https://t.me/IR_NETLIFY/7" id="tutorial-link" target="_blank">GET Netlify Domain</a>
+				</label>
+				<input id="main-host" oninput="this.value = this.value.replace(/[^a-zA-Z0-9./:-]/g, '')" placeholder="example.netlify.app" type="text">
+			</div>
+			<div class="input-group">
+				<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+					<label style="margin: 0;">SNI</label>
+					<div style="display: flex; gap: 5px;">
+						<button class="action-btn btn-default-action" onclick="loadDefaultDomains()">Default</button>
+						<button class="action-btn btn-clear" onclick="document.getElementById('domain-list').value = ''">Clear</button>
+						<button class="action-btn btn-paste" onclick="pasteToArea('domain-list')">Paste</button>
+					</div>
 				</div>
+				<textarea id="domain-list" placeholder="Enter SNI line by line..." rows="6"></textarea>
 			</div>
-			<textarea id="ip-list" placeholder="Enter IPs line by line..." rows="4"></textarea>
-		</div><button class="gen-btn" onclick="generateConfigs()">Generate VLESS Configs <span class="info-icon" onclick="showInfo(event, 'gen_vless')">?</span></button> <button class="gen-balanced-btn" onclick="generateBalancedJSON()">Generate Custom JSON <span class="info-icon" onclick="showInfo(event, 'gen_json')">?</span></button>
-		<div id="output-container">
-			<div class="success-header">
-				<span style="color:#3fb950; font-size: 0.7rem; font-weight: bold;">✓ CONFIGS GENERATED</span> <button class="action-btn btn-copy" id="copy-btn" onclick="copyToClipboard('result-area', 'copy-btn')">Copy & Download</button>
+			<div class="input-group" id="ip-group">
+				<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+					<label style="margin: 0; color: var(--theme-netlify);">IP</label>
+					<div style="display: flex; gap: 5px;">
+						<button class="action-btn btn-default-action" onclick="loadDefaultIps()">Default</button>
+						<button class="action-btn btn-clear" onclick="document.getElementById('ip-list').value = ''">Clear</button>
+						<button class="action-btn btn-paste" onclick="pasteToArea('ip-list')">Paste</button>
+					</div>
+				</div>
+				<textarea id="ip-list" placeholder="Enter IPs line by line..." rows="4"></textarea>
 			</div>
-			<textarea id="result-area" readonly></textarea>
-		</div>
-		<div id="balanced-output">
-			<div class="balanced-panel">
+			<button class="gen-btn" onclick="generateConfigs()">Generate VLESS Configs <span class="info-icon" onclick="showInfo(event, 'gen_vless')">?</span>
+			</button>
+			<button class="gen-balanced-btn" onclick="generateBalancedJSON()">Generate Custom JSON <span class="info-icon" onclick="showInfo(event, 'gen_json')">?</span>
+			</button>
+			<div id="output-container">
 				<div class="success-header">
-					<span style="color:var(--neon-orange); font-size: 0.7rem; font-weight: bold;">✓ CUSTOM CONFIGS GENERATED</span>
+					<span style="color:#00c40d; font-size: 0.7rem; font-weight: bold;">✓ CONFIGS GENERATED</span>
+					<button class="action-btn btn-copy" id="copy-btn" onclick="copyToClipboard('result-area', 'copy-btn')">Copy & Download</button>
 				</div>
-				<div class="switch-container">
-					<button class="switch-btn active" id="sw-xray" onclick="setJsonCore('xray')">XRAY-CORE</button> <button class="switch-btn" id="sw-singbox" onclick="setJsonCore('singbox')">SING-BOX</button>
-				</div>
-				<div style="display: flex; gap: 10px;">
-					<button class="gen-btn" id="btn-copy-json" onclick="copyBalanced()">COPY JSON</button> <button class="gen-btn" onclick="downloadBalanced()">DOWNLOAD</button>
+				<textarea id="result-area" readonly></textarea>
+			</div>
+			<div id="balanced-output">
+				<div class="balanced-panel">
+					<div class="success-header">
+						<span style="color:var(--neon-orange); font-size: 0.7rem; font-weight: bold;">✓ CUSTOM CONFIGS GENERATED</span>
+					</div>
+					<div class="switch-container">
+						<button class="switch-btn active" id="sw-xray" onclick="setJsonCore('xray')">XRAY-CORE</button>
+						<button class="switch-btn" id="sw-singbox" onclick="setJsonCore('singbox')">SING-BOX</button>
+					</div>
+					<div style="display: flex; gap: 10px;">
+						<button class="gen-btn" id="btn-copy-json" onclick="copyBalanced()">COPY JSON</button>
+						<button class="gen-btn" onclick="downloadBalanced()">DOWNLOAD</button>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-	<div class="footer">
-		<a class="footer-link" href="https://t.me/IR_NETLIFY" target="_blank">@IR_NETLIFY</a>
-	</div>
-	<div class="info-modal-overlay" id="infoModal">
-		<div class="info-modal-content">
-			<button class="info-modal-close" onclick="closeInfoModal()">×</button>
-			<h3 id="infoModalTitle">Title</h3>
-			<div id="infoModalBody">
-				Content
+		<div class="footer">
+			<a class="footer-link" href="https://t.me/IR_NETLIFY" target="_blank">@IR_NETLIFY</a>
+		</div>
+		<div class="info-modal-overlay" id="infoModal">
+			<div class="info-modal-content">
+				<button class="info-modal-close" onclick="closeInfoModal()">×</button>
+				<h3 id="infoModalTitle">Title</h3>
+				<div id="infoModalBody"> Content </div>
 			</div>
 		</div>
-	</div>
-	<script>
-	      let currentPlatform = 'netlify';
-	      let netlifyMode = 'shecan';
-	      let configMode = 'default';
-	      let selectedCore = 'xray';
-	      let lastGeneratedJson = "";
+		<script>
+			let currentPlatform = 'netlify';
+			let netlifyMode = 'shecan';
+			let configMode = 'default';
+			let selectedCore = 'xray';
+			let lastGeneratedJson = "";
+			const sharedDefaults = ["helm.sh", "keda.sh", "rook.io", "istio.io", "cilium.io", "fluxcd.io", "harbor.io", "calico.org", "linkerd.io", "openebs.io", "tekton.dev", "longhorn.io", "blog.helm.sh", "docs.helm.sh", "crossplane.io", "kubernetes.io", "kubebuilder.io", "cert-manager.io", "letsencrypt.org", "kind.sigs.k8s.io", "kops.sigs.k8s.io", "krew.sigs.k8s.io", "kwok.sigs.k8s.io", "kueue.sigs.k8s.io", "jobset.sigs.k8s.io", "kaniko.sigs.k8s.io", "minikube.sigs.k8s.io", "operatorframework.io", "container.sigs.k8s.io", "kustomize.sigs.k8s.io", "argo-cd.readthedocs.io", "cluster-api.sigs.k8s.io", "descheduler.sigs.k8s.io", "gateway-api.sigs.k8s.io", "external-dns.sigs.k8s.io", "service-apis.sigs.k8s.io", "image-builder.sigs.k8s.io", "kubectl.docs.kubernetes.io", "metrics-server.sigs.k8s.io", "scheduler-plugins.sigs.k8s.io", "controller-runtime.sigs.k8s.io", "prometheus-operator.sigs.k8s.io", "node-feature-discovery.sigs.k8s.io", "hierarchical-namespaces.sigs.k8s.io", "secrets-store-csi-driver.sigs.k8s.io", "security-profiles-operator.sigs.k8s.io", "cluster-proportional-autoscaler.sigs.k8s.io"];
+			const data = {
+				netlify_normal: {
+					label: "Netlify Domain",
+					template: "vless://{USER}@{ADDRESS}:443?encryption=none&security=tls&sni={SNI}&alpn=h2%2Chttp%2F1.1&insecure=1&allowInsecure=1&type=xhttp&host={HOST}&path={PATH}&mode=auto#🌐%20@IR_NETLIFY%20%20%20{NAME}",
+					defaults: sharedDefaults
+				},
+				netlify_shecan: {
+					ips: ["50.7.5.83", "50.7.5.85", "50.7.87.2", "50.7.87.3", "50.7.87.4", "50.7.87.5", "144.76.1.88", "216.24.57.1", "37.16.18.81", "52.250.41.2", "76.76.21.21", "76.76.21.112", "85.10.207.48", "94.130.13.19", "94.130.33.41", "94.130.50.12", "95.216.69.37", "198.202.211.1", "198.252.206.1", "204.12.196.34", "216.150.1.193", "65.109.34.234", "94.130.70.160", "104.18.25.196", "138.201.54.122", "142.54.178.211", "149.154.167.99", "178.22.122.101", "204.79.197.220", "213.180.193.56", "216.239.38.120", "40.114.177.246", "63.141.252.203", "64.239.109.193"],
+					defaults: sharedDefaults
+				}
+			};
 
-	   const sharedDefaults = [
-	      "helm.sh",
-	      "keda.sh",
-	      "rook.io",
-	      "istio.io",
-	      "cilium.io",
-	      "fluxcd.io",
-	      "harbor.io",
-	      "calico.org",
-	      "linkerd.io",
-	      "openebs.io",
-	      "tekton.dev",
-	      "longhorn.io",
-	      "blog.helm.sh",
-	      "docs.helm.sh",
-	      "crossplane.io",
-	      "kubernetes.io",
-	      "kubebuilder.io",
-	      "cert-manager.io",
-	      "letsencrypt.org",
-	      "kind.sigs.k8s.io",
-	      "kops.sigs.k8s.io",
-	      "krew.sigs.k8s.io",
-	      "kwok.sigs.k8s.io",
-	      "kueue.sigs.k8s.io",
-	      "jobset.sigs.k8s.io",
-	      "kaniko.sigs.k8s.io",
-	      "minikube.sigs.k8s.io",
-	      "operatorframework.io",
-	      "container.sigs.k8s.io",
-	      "kustomize.sigs.k8s.io",
-	      "argo-cd.readthedocs.io",
-	      "cluster-api.sigs.k8s.io",
-	      "descheduler.sigs.k8s.io",
-	      "gateway-api.sigs.k8s.io",
-	      "external-dns.sigs.k8s.io",
-	      "service-apis.sigs.k8s.io",
-	      "image-builder.sigs.k8s.io",
-	      "kubectl.docs.kubernetes.io",
-	      "metrics-server.sigs.k8s.io",
-	      "scheduler-plugins.sigs.k8s.io",
-	      "controller-runtime.sigs.k8s.io",
-	      "prometheus-operator.sigs.k8s.io",
-	      "node-feature-discovery.sigs.k8s.io",
-	      "hierarchical-namespaces.sigs.k8s.io",
-	      "secrets-store-csi-driver.sigs.k8s.io",
-	      "security-profiles-operator.sigs.k8s.io",
-	      "cluster-proportional-autoscaler.sigs.k8s.io"
-	   ];
+			function setPlatform() {
+				document.getElementById('tutorial-link').style.display = 'inline-block';
+				document.getElementById('netlify-options').style.display = 'flex';
+				document.getElementById('netlify-config-type').style.display = 'flex';
+				document.getElementById('ip-group').style.display = (netlifyMode === 'shecan') ? 'block' : 'none';
+				hideOutputs();
+				loadDefaultDomains();
+			}
 
-	   const data = {
-	      netlify_normal: {
-	          label: "Netlify Domain",
-	          template: "vless://{USER}@{ADDRESS}:443?encryption=none&security=tls&sni={SNI}&alpn=h2%2Chttp%2F1.1&insecure=1&allowInsecure=1&type=xhttp&host={HOST}&path={PATH}&mode=auto#🌐%20@IR_NETLIFY%20%20%20{NAME}",
-	          defaults: sharedDefaults
-	      },
+			function setNetlifyMode(mode) {
+				netlifyMode = mode;
+				document.querySelectorAll('#netlify-options .sub-tab-btn').forEach(b => b.classList.remove('active'));
+				document.getElementById(`btn-${mode}`).classList.add('active');
+				document.getElementById('ip-group').style.display = (mode === 'shecan') ? 'block' : 'none';
+				hideOutputs();
+				loadDefaultDomains();
+			}
 
-	      netlify_shecan: {
-	          ips: [
-	              "50.7.5.83",
-	              "50.7.5.85",
-	              "50.7.87.2",
-	              "50.7.87.3",
-	              "50.7.87.4",
-	              "50.7.87.5",
-	              "144.76.1.88",
-	              "216.24.57.1",
-	              "37.16.18.81",
-	              "52.250.41.2",
-	              "76.76.21.21",
-	              "76.76.21.112",
-	              "85.10.207.48",
-	              "94.130.13.19",
-	              "94.130.33.41",
-	              "94.130.50.12",
-	              "95.216.69.37",
-	              "198.202.211.1",
-	              "198.252.206.1",
-	              "204.12.196.34",
-	              "216.150.1.193",
-	              "65.109.34.234",
-	              "94.130.70.160",
-	              "104.18.25.196",
-	              "138.201.54.122",
-	              "142.54.178.211",
-	              "149.154.167.99",
-	              "178.22.122.101",
-	              "204.79.197.220",
-	              "213.180.193.56",
-	              "216.239.38.120",
-	              "40.114.177.246",
-	              "63.141.252.203",
-	              "64.239.109.193"
-	          ],
-	          defaults: sharedDefaults
-	      }
-	   };
+			function setConfigMode(mode) {
+				configMode = mode;
+				document.querySelectorAll('#netlify-config-type .sub-tab-btn').forEach(b => b.classList.remove('active'));
+				document.getElementById(`btn-${mode}`).classList.add('active');
+				document.getElementById('custom-settings').style.display = (mode === 'custom') ? 'block' : 'none';
+				hideOutputs();
+			}
 
-	      function setPlatform() {
-	          document.getElementById('tutorial-link').style.display = 'inline-block';
-	          document.getElementById('netlify-options').style.display = 'flex';
-	          document.getElementById('netlify-config-type').style.display = 'flex';
-	          document.getElementById('ip-group').style.display = (netlifyMode === 'shecan') ? 'block' : 'none';
-	          hideOutputs();
-	          loadDefaultDomains();
-	      }
+			function hideOutputs() {
+				document.getElementById('output-container').style.display = 'none';
+				document.getElementById('balanced-output').style.display = 'none';
+			}
 
-	      function setNetlifyMode(mode) {
-	          netlifyMode = mode;
-	          document.querySelectorAll('#netlify-options .sub-tab-btn').forEach(b => b.classList.remove('active'));
-	          document.getElementById(`btn-${mode}`).classList.add('active');
-	          document.getElementById('ip-group').style.display = (mode === 'shecan') ? 'block' : 'none';
-	          hideOutputs(); 
-	          loadDefaultDomains();
-	      }
+			function loadDefaultDomains() {
+				const list = (netlifyMode === 'shecan' ? data.netlify_shecan.defaults : data.netlify_normal.defaults);
+				document.getElementById('domain-list').value = list.join('\n');
+			}
 
-	      function setConfigMode(mode) {
-	          configMode = mode;
-	          document.querySelectorAll('#netlify-config-type .sub-tab-btn').forEach(b => b.classList.remove('active'));
-	          document.getElementById(`btn-${mode}`).classList.add('active');
-	          document.getElementById('custom-settings').style.display = (mode === 'custom') ? 'block' : 'none';
-	          hideOutputs();
-	      }
+			function loadDefaultIps() {
+				document.getElementById('ip-list').value = data.netlify_shecan.ips.join('\n');
+			}
 
-	      function hideOutputs() {
-	          document.getElementById('output-container').style.display = 'none';
-	          document.getElementById('balanced-output').style.display = 'none';
-	      }
+			function getInputs() {
+				let hasError = false;
+				const hostElement = document.getElementById('main-host');
+				const sniElement = document.getElementById('domain-list');
+				const ipElement = document.getElementById('ip-list');
+				let rawHost = hostElement.value.trim();
+				let cleanHost = rawHost.replace(/^(https?:\/\/)?(www\.)?/, '').split('/')[0];
+				let host = cleanHost.replace(/[^a-zA-Z0-9.-]/g, '');
+				const sniInput = sniElement.value.trim();
+				const ipInput = ipElement.value.trim();
+				if (!host) {
+					showError(hostElement);
+					hasError = true;
+				}
+				if (!sniInput) {
+					showError(sniElement);
+					hasError = true;
+				}
+				let ips = [];
+				if (netlifyMode === 'shecan') {
+					if (!ipInput) {
+						showError(ipElement);
+						hasError = true;
+					} else {
+						ips = ipInput.split('\n').map(i => i.trim().replace(/[^a-fA-F0-9.:]/g, '')).filter(i => i.length > 0);
+					}
+				}
+				if (hasError) return null;
+				const domains = sniInput.split('\n').map(d => d.trim().replace(/[^a-zA-Z0-9.-]/g, '')).filter(d => d.length > 0);
+				let user = "Telegram-Parsashonam";
+				let path = "/p4r34m";
+				if (configMode === 'custom') {
+					user = document.getElementById('custom-user').value.trim() || user;
+					let p = document.getElementById('custom-path').value.trim();
+					if (p) path = p.startsWith('/') ? p : '/' + p;
+				}
+				return {
+					host,
+					domains,
+					ips,
+					user,
+					path
+				};
+			}
 
-	      function loadDefaultDomains() {
-	          const list = (netlifyMode === 'shecan' ? data.netlify_shecan.defaults : data.netlify_normal.defaults);
-	          document.getElementById('domain-list').value = list.join('\n');
-	      }
+			function showError(element) {
+				element.classList.add('error-border');
+				element.addEventListener('input', function removeError() {
+					element.classList.remove('error-border');
+					element.removeEventListener('input', removeError);
+				});
+			}
 
-	      function loadDefaultIps() {
-	          document.getElementById('ip-list').value = data.netlify_shecan.ips.join('\n');
-	      }
+			function generateConfigs() {
+				const inputs = getInputs();
+				if (!inputs) return;
+				const {
+					host,
+					domains,
+					ips,
+					user,
+					path
+				} = inputs;
+				let results = [];
+				if (netlifyMode === 'shecan') {
+					domains.forEach(sni => ips.forEach(ip => results.push(`vless://${user}@${ip}:443?encryption=none&security=tls&sni=${sni}&alpn=h2%2Chttp%2F1.1&insecure=1&allowInsecure=1&type=xhttp&host=${host}&path=${path}&mode=auto#🌐%20@IR_NETLIFY%20%20${sni}%20%20${ip}`)));
+				} else {
+					domains.forEach(d => results.push(data.netlify_normal.template.replaceAll("{USER}", user).replaceAll("{PATH}", path).replaceAll("{ADDRESS}", d).replaceAll("{SNI}", d).replaceAll("{HOST}", host).replaceAll("{NAME}", d)));
+				}
+				document.getElementById('result-area').value = results.join('\n');
+				document.getElementById('balanced-output').style.display = 'none';
+				document.getElementById('output-container').style.display = 'block';
+			}
 
-	      function getInputs() {
-	          let hasError = false;
-	      
-	          const hostElement = document.getElementById('main-host');
-	          const sniElement = document.getElementById('domain-list');
-	          const ipElement = document.getElementById('ip-list');
-	      
-	          let rawHost = hostElement.value.trim();
-	          let cleanHost = rawHost.replace(/^(https?:\/\/)?(www\.)?/, '').split('/')[0];
-	          let host = cleanHost.replace(/[^a-zA-Z0-9.-]/g, '');
-	      
-	          const sniInput = sniElement.value.trim();
-	          const ipInput = ipElement.value.trim();
+			function setJsonCore(core) {
+				selectedCore = core;
+				document.getElementById('sw-xray').classList.toggle('active', core === 'xray');
+				document.getElementById('sw-singbox').classList.toggle('active', core === 'singbox');
+				buildBalancedJson();
+			}
 
-	          if (!host) {
-	              showError(hostElement);
-	              hasError = true;
-	          }
-	      
-	          if (!sniInput) {
-	              showError(sniElement);
-	              hasError = true;
-	          }
+			function generateBalancedJSON() {
+				const inputs = getInputs();
+				if (!inputs) return;
+				document.getElementById('output-container').style.display = 'none';
+				document.getElementById('balanced-output').style.display = 'block';
+				buildBalancedJson();
+			}
 
-	          let ips = [];
-	          if (netlifyMode === 'shecan') {
-	              if (!ipInput) {
-	                  showError(ipElement);
-	                  hasError = true;
-	              } else {
-	                  ips = ipInput.split('\n')
-	                      .map(i => i.trim().replace(/[^a-fA-F0-9.:]/g, ''))
-	                      .filter(i => i.length > 0);
-	              }
-	          }
-	      
-	          if (hasError) return null;
-	      
-	          const domains = sniInput.split('\n')
-	              .map(d => d.trim().replace(/[^a-zA-Z0-9.-]/g, '')) 
-	              .filter(d => d.length > 0);
-	      
-	          let user = "Telegram-Parsashonam"; 
-	          let path = "/p4r34m"; 
-	          if (configMode === 'custom') {
-	              user = document.getElementById('custom-user').value.trim() || user;
-	              let p = document.getElementById('custom-path').value.trim();
-	              if(p) path = p.startsWith('/') ? p : '/' + p;
-	          }
-	          return { host, domains, ips, user, path };
-	      }
+			function buildBalancedJson() {
+				const {
+					host,
+					domains,
+					ips,
+					user,
+					path
+				} = getInputs();
+				let proxies = [];
+				if (netlifyMode === 'shecan') {
+					domains.forEach((sni, sIdx) => {
+						ips.forEach((ip, iIdx) => {
+							proxies.push({
+								name: `Node-${sIdx}-${iIdx}`,
+								address: ip,
+								sni: sni,
+								host: host,
+								path: path,
+								user: user
+							});
+						});
+					});
+				} else {
+					domains.forEach((d, idx) => {
+						proxies.push({
+							name: `Node-${idx}`,
+							address: d,
+							sni: d,
+							host: host,
+							path: path,
+							user: user
+						});
+					});
+				}
+				if (selectedCore === 'xray') {
+					lastGeneratedJson = createXrayJson(proxies);
+				} else {
+					lastGeneratedJson = createSingboxJson(proxies);
+				}
+			}
 
-	      function showError(element) {
-	          element.classList.add('error-border');
-	          
-	          element.addEventListener('input', function removeError() {
-	              element.classList.remove('error-border');
-	              element.removeEventListener('input', removeError);
-	          });
-	      }
+			function createXrayJson(proxies) {
+				let outbounds = proxies.map(p => ({
+					tag: p.name,
+					protocol: "vless",
+					settings: {
+						vnext: [{
+							address: p.address,
+							port: 443,
+							users: [{
+								id: p.user,
+								encryption: "none"
+							}]
+						}]
+					},
+					streamSettings: {
+						network: "xhttp",
+						security: "tls",
+						tlsSettings: {
+							serverName: p.sni,
+							allowInsecure: true
+						},
+						xhttpSettings: {
+							host: p.host,
+							path: p.path
+						}
+					}
+				}));
+				const fullConfig = {
+					inbounds: [{
+						port: 10808,
+						protocol: "socks",
+						settings: {
+							auth: "noauth",
+							udp: true
+						}
+					}],
+					outbounds: [...outbounds, {
+						protocol: "freedom",
+						tag: "direct"
+					}],
+					observatory: {
+						subjectSelector: proxies.map(p => p.name),
+						probeUrl: "http://cp.cloudflare.com/generate_204",
+						probeInterval: "10s"
+					},
+					routing: {
+						balancers: [{
+							tag: "balancer",
+							selector: proxies.map(p => p.name)
+						}],
+						rules: [{
+							type: "field",
+							network: "tcp,udp",
+							balancerTag: "balancer"
+						}]
+					}
+				};
+				return JSON.stringify(fullConfig, null, 2);
+			}
 
-	      function generateConfigs() {
-	          const inputs = getInputs();
-	          if (!inputs) return; 
-	          const { host, domains, ips, user, path } = inputs;
-	          
-	          let results = [];
-	          if (netlifyMode === 'shecan') {
-	              domains.forEach(sni => ips.forEach(ip => results.push(`vless://${user}@${ip}:443?encryption=none&security=tls&sni=${sni}&alpn=h2%2Chttp%2F1.1&insecure=1&allowInsecure=1&type=xhttp&host=${host}&path=${path}&mode=auto#🌐%20@IR_NETLIFY%20%20${sni}%20%20${ip}`)));
-	          } else {
-	              domains.forEach(d => results.push(data.netlify_normal.template.replaceAll("{USER}", user).replaceAll("{PATH}", path).replaceAll("{ADDRESS}", d).replaceAll("{SNI}", d).replaceAll("{HOST}", host).replaceAll("{NAME}", d)));
-	          }
-	          
-	          document.getElementById('result-area').value = results.join('\n');
-	          document.getElementById('balanced-output').style.display = 'none';
-	          document.getElementById('output-container').style.display = 'block';
-	      }
+			function createSingboxJson(proxies) {
+				let outbounds = proxies.map(p => ({
+					type: "vless",
+					tag: p.name,
+					server: p.address,
+					server_port: 443,
+					uuid: p.user,
+					tls: {
+						enabled: true,
+						server_name: p.sni,
+						insecure: true
+					},
+					transport: {
+						type: "xhttp",
+						host: p.host,
+						path: p.path
+					}
+				}));
+				const fullConfig = {
+					outbounds: [{
+						type: "urltest",
+						tag: "Autoscale-LoadBalancer",
+						outbounds: proxies.map(p => p.name),
+						url: "http://cp.cloudflare.com/generate_204",
+						interval: "10s",
+						tolerance: 50
+					}, ...outbounds, {
+						type: "direct",
+						tag: "direct"
+					}],
+					route: {
+						rules: [{
+							outbound: "Autoscale-LoadBalancer"
+						}]
+					}
+				};
+				return JSON.stringify(fullConfig, null, 2);
+			}
+			async function copyBalanced() {
+				if (!lastGeneratedJson) return;
+				const copyBtn = document.getElementById('btn-copy-json');
+				const originalText = copyBtn.innerText;
+				const textToCopy = lastGeneratedJson;
+				let copySuccess = false;
+				try {
+					if (navigator.clipboard && window.isSecureContext) {
+						await navigator.clipboard.writeText(textToCopy);
+						copySuccess = true;
+					} else {
+						throw new Error('Clipboard API Unavailable');
+					}
+				} catch (err) {
+					const textArea = document.createElement("textarea");
+					textArea.value = textToCopy;
+					document.body.appendChild(textArea);
+					textArea.select();
+					copySuccess = document.execCommand('copy');
+					document.body.removeChild(textArea);
+				}
+				if (copySuccess) {
+					copyBtn.innerText = "COPIED ✓";
+					copyBtn.style.color = "var(--neon-green)";
+				} else {
+					if (textToCopy.length > 800000) {
+						alert("حجم بسیار بالا! لطفاً از دکمه DOWNLOAD استفاده کنید (محدودیت کلیپ‌بورد موبایل).");
+					}
+					copyBtn.innerText = "FAILED!";
+					copyBtn.style.color = "var(--neon-red)";
+				}
+				setTimeout(() => {
+					copyBtn.innerText = originalText;
+					copyBtn.style.color = "";
+				}, 2000);
+			}
 
-	      function setJsonCore(core) {
-	          selectedCore = core;
-	          document.getElementById('sw-xray').classList.toggle('active', core === 'xray');
-	          document.getElementById('sw-singbox').classList.toggle('active', core === 'singbox');
-	          buildBalancedJson();
-	      }
+			function downloadBalanced() {
+				if (!lastGeneratedJson) return;
+				const blob = new Blob([lastGeneratedJson], {
+					type: 'application/json'
+				});
+				const url = URL.createObjectURL(blob);
+				const a = document.createElement('a');
+				a.href = url;
+				a.download = `IR_NETLIFY_Balanced_${getFormattedTimestamp()}.json`;
+				document.body.appendChild(a);
+				a.click();
+				document.body.removeChild(a);
+				URL.revokeObjectURL(url);
+			}
+			async function copyToClipboard(id, btnId) {
+				const area = document.getElementById(id);
+				const textToCopy = area.value;
+				const btn = document.getElementById(btnId);
+				if (!textToCopy) {
+					alert("متنی برای کپی وجود ندارد!");
+					return;
+				}
+				const blob = new Blob([textToCopy], {
+					type: 'text/plain'
+				});
+				const url = URL.createObjectURL(blob);
+				const a = document.createElement("a");
+				a.href = url;
+				a.download = `IR_NETLIFY_Configs_${getFormattedTimestamp()}.txt`;
+				document.body.appendChild(a);
+				a.click();
+				setTimeout(() => {
+					document.body.removeChild(a);
+					window.URL.revokeObjectURL(url);
+				}, 0);
+				let copySuccess = false;
+				try {
+					if (navigator.clipboard && window.isSecureContext) {
+						await navigator.clipboard.writeText(textToCopy);
+						copySuccess = true;
+					} else {
+						throw new Error('API Unavailable');
+					}
+				} catch (err) {
+					try {
+						const tempTextArea = document.createElement("textarea");
+						tempTextArea.value = textToCopy;
+						tempTextArea.style.position = "fixed";
+						tempTextArea.style.left = "-9999px";
+						tempTextArea.style.top = "0";
+						document.body.appendChild(tempTextArea);
+						tempTextArea.focus();
+						tempTextArea.select();
+						copySuccess = document.execCommand('copy');
+						document.body.removeChild(tempTextArea);
+					} catch (fallbackErr) {
+						copySuccess = false;
+					}
+				}
+				if (copySuccess) {
+					btn.innerText = "COPIED & DOWNLOADED ✓";
+					btn.style.borderColor = "#00c40d";
+					btn.style.color = "#00c40d";
+				} else {
+					if (textToCopy.length > 800000) {
+						alert("حجم متن بسیار زیاد است. فایل با موفقیت دانلود شد، از آن استفاده کنید.");
+					}
+					btn.innerText = "DOWNLOADED ✓ (Copy Failed)";
+					btn.style.borderColor = "var(--neon-orange)";
+					btn.style.color = "var(--neon-orange)";
+				}
+				setTimeout(() => {
+					btn.innerText = "Copy & Download";
+					btn.style.borderColor = "#00c40d";
+					btn.style.color = "#00c40d";
+				}, 4000);
+			}
+			window.onload = () => {
+				setPlatform();
+				loadDefaultIps();
+				setNetlifyMode('shecan');
+				setConfigMode('default');
+			};
+			async function pasteToArea(targetId) {
+				const area = document.getElementById(targetId);
+				try {
+					const text = await navigator.clipboard.readText();
+					if (text) {
+						area.value += (area.value ? '\n' : '') + text;
+						console.log("PASTED ✓.");
+					}
+				} catch (err) {
+					alert("Paste failed. Please Paste Manually.");
+					console.error("Failed to read clipboard: ", err);
+				}
+			}
+			const infoData = {
+				'netlify': {
+					title: 'NETLIFY',
+					content: `متود نتلیفای متودی مناسب برای اتصال به اینترنت بین الملل در شرایط کنونی
+        									
+        									
+									<br>
+										<br>
+											<span class="warning-text">⚠️ احتمال اتصال این متود با اشتراک پولی شکن : 99 درصد<\/span>
+												<br>
+													<span class="warning-text">⚠️ احتمال اتصال این متود بدون اشتراک شکن : 5 درصد<\/span>
+														<br>
+															<span class="warning-text">⚠️ ضمانتی بر ادامه عملکرد روی سرویس شکن نیست<\/span>
+																<br>
+																	<br>
+            	          کانال ما: 
+        																		
+        																		
+																		<a href="https://t.me/IR_NETLIFY" target="_blank" style="color: var(--theme-netlify); text-decoration: none; font-weight: bold;">IR_NETLIFY@<\/a>`
+				},
+				'direct_sni': {
+					title: 'Direct SNI',
+					content: 'این حالت برای کاربرانی که  < b > اشتراک شکن دارند < \/b> مناسب است'
+				},
+				'ip_sni': {
+					title: 'IP + SNI',
+					content: `این حالت برای کاربرانی که 
+        																				
+        																			
+																			<b>اشتراک شکن ندارند<\/b> مناسب است
+        																					
+        																				
+																				<br>
+																					<br>
+																						<span class="warning-text">⚠️ در این حالت تعداد کانفیگ ها زیاد است و بهتر است در ویندوز تست کنید<\/span>`
+				},
+				'parsa': {
+					title: 'Parsa Server',
+					content: 'این حالت از سرور Parsashonam@ استفاده میکنه'
+				},
+				'custom': {
+					title: 'Your Server',
+					content: `در این گزینه شما میتونید سرور خودتون رو بزنید
+        																								
+        																							
+																							<br>
+																								<br>
+																									<span class="warning-text">⚠️ خط اول این فایل رو باید ادیت کنید و بعد آپلود کنید:<\/span>
+																										<br>
+																											<code style="background: #0d1117; padding: 5px; border-radius: 6px; display: inline-block; margin-top: 8px; direction: ltr; border: 1px solid #30363d; font-size: 0.75rem;">netlify-relay-master\\netlify\\edge-functions\\relay.js<\/code>`
+				},
+				'gen_vless': {
+					title: 'Generate VLESS Configs',
+					content: 'ساخت کانفیگ vless'
+				},
+				'gen_json': {
+					title: 'Generate Custom JSON',
+					content: `ساخت کانفیگ کاستوم با لود بالانسر
+        																													
+        																												
+																												<br>
+																													<br>
+																														<span class="warning-text">⚠️ برای استفاده از کانفیگ کاستوم باید آخرین نسخه v2rayN /v2rayNG و آپدیت هسته Xray استفاده کنید.<\/span>`
+				}
+			};
 
-	      function generateBalancedJSON() {
-	          const inputs = getInputs();
-	          if (!inputs) return; 
+			function showInfo(event, key) {
+				event.stopPropagation();
+				const modal = document.getElementById('infoModal');
+				if (infoData[key]) {
+					document.getElementById('infoModalTitle').innerHTML = infoData[key].title;
+					document.getElementById('infoModalBody').innerHTML = infoData[key].content;
+					modal.classList.add('active');
+				}
+			}
 
-	          document.getElementById('output-container').style.display = 'none';
-	          document.getElementById('balanced-output').style.display = 'block';
-	          buildBalancedJson();
-	      }
+			function closeInfoModal() {
+				document.getElementById('infoModal').classList.remove('active');
+			}
+			window.addEventListener('click', function(event) {
+				const modal = document.getElementById('infoModal');
+				if (event.target === modal) {
+					closeInfoModal();
+				}
+			});
 
-	      function buildBalancedJson() {
-	          const { host, domains, ips, user, path } = getInputs();
-	          let proxies = [];
-	          
-	          if (netlifyMode === 'shecan') {
-	              domains.forEach((sni, sIdx) => {
-	                  ips.forEach((ip, iIdx) => {
-	                      proxies.push({ name: `Node-${sIdx}-${iIdx}`, address: ip, sni: sni, host: host, path: path, user: user });
-	                  });
-	              });
-	          } else {
-	              domains.forEach((d, idx) => {
-	                  proxies.push({ name: `Node-${idx}`, address: d, sni: d, host: host, path: path, user: user });
-	              });
-	          }
-
-	          if (selectedCore === 'xray') {
-	              lastGeneratedJson = createXrayJson(proxies);
-	          } else {
-	              lastGeneratedJson = createSingboxJson(proxies);
-	          }
-	      }
-
-	      function createXrayJson(proxies) {
-	          let outbounds = proxies.map(p => ({
-	              tag: p.name,
-	              protocol: "vless",
-	              settings: { vnext: [{ address: p.address, port: 443, users: [{ id: p.user, encryption: "none" }] }] },
-	              streamSettings: { network: "xhttp", security: "tls", tlsSettings: { serverName: p.sni, allowInsecure: true }, xhttpSettings: { host: p.host, path: p.path } }
-	          }));
-
-	          const fullConfig = {
-	              inbounds: [{ port: 10808, protocol: "socks", settings: { auth: "noauth", udp: true } }],
-	              outbounds: [...outbounds, { protocol: "freedom", tag: "direct" }],
-	              observatory: { subjectSelector: proxies.map(p => p.name), probeUrl: "http://cp.cloudflare.com/generate_204", probeInterval: "10s" },
-	              routing: {
-	                  balancers: [{ tag: "balancer", selector: proxies.map(p => p.name) }],
-	                  rules: [{ type: "field", network: "tcp,udp", balancerTag: "balancer" }]
-	              }
-	          };
-	          return JSON.stringify(fullConfig, null, 2);
-	      }
-
-	      function createSingboxJson(proxies) {
-	          let outbounds = proxies.map(p => ({
-	              type: "vless",
-	              tag: p.name,
-	              server: p.address,
-	              server_port: 443,
-	              uuid: p.user,
-	              tls: { enabled: true, server_name: p.sni, insecure: true },
-	              transport: { type: "xhttp", host: p.host, path: p.path }
-	          }));
-
-	          const fullConfig = {
-	              outbounds: [
-	                  { type: "urltest", tag: "Autoscale-LoadBalancer", outbounds: proxies.map(p => p.name), url: "http://cp.cloudflare.com/generate_204", interval: "10s", tolerance: 50 },
-	                  ...outbounds,
-	                  { type: "direct", tag: "direct" }
-	              ],
-	              route: { rules: [{ outbound: "Autoscale-LoadBalancer" }] }
-	          };
-	          return JSON.stringify(fullConfig, null, 2);
-	      }
-
-	      async function copyBalanced() {
-	          if (!lastGeneratedJson) return;
-
-	          try {
-	              if (navigator.clipboard && window.isSecureContext) {
-	                  await navigator.clipboard.writeText(lastGeneratedJson);
-	              } else {
-	                  const textArea = document.createElement("textarea");
-	                  textArea.value = lastGeneratedJson;
-	                  textArea.style.position = "fixed"; 
-	                  textArea.style.left = "-9999px";
-	                  document.body.appendChild(textArea);
-	                  textArea.select();
-	                  document.execCommand('copy');
-	                  document.body.removeChild(textArea);
-	              }
-	              
-	              const copyBtn = document.getElementById('btn-copy-json');
-	              const originalText = copyBtn.innerText;
-	              copyBtn.innerText = "COPIED ✓";
-	              setTimeout(() => copyBtn.innerText = originalText, 2000);
-	              
-	          } catch (err) {
-	              console.error('Failed to copy text: ', err);
-	              alert("Copy failed. Please copy manually.");
-	          }
-	      }
-
-	      function downloadBalanced() {
-	          const blob = new Blob([lastGeneratedJson], { type: "application/json" });
-	          const url = URL.createObjectURL(blob);
-	          const a = document.createElement('a');
-	          a.href = url;
-	          a.download = `IR_NETLIFY_${selectedCore}_CUSTOM.json`;
-	          a.click();
-	      }
-
-	      async function copyToClipboard(id, btnId) {
-	          const area = document.getElementById(id);
-	          const textToCopy = area.value;
-	      
-	          if (!textToCopy) {
-	              alert("متنی برای کپی وجود ندارد!");
-	              return;
-	          }
-	      
-	          try {
-	              if (navigator.clipboard && window.isSecureContext) {
-	                  await navigator.clipboard.writeText(textToCopy);
-	              } else {
-	                  const tempTextArea = document.createElement("textarea");
-	                  tempTextArea.value = textToCopy;
-	                  tempTextArea.style.position = "fixed";
-	                  tempTextArea.style.left = "-9999px";
-	                  document.body.appendChild(tempTextArea);
-	                  tempTextArea.select();
-	                  document.execCommand('copy');
-	                  document.body.removeChild(tempTextArea);
-	              }
-	          } catch (err) {
-	              console.log("کپی انجام نشد؛ احتمالا حجم متن بالاست.");
-	          }
-	      
-	          const blob = new Blob([textToCopy], { type: "text/plain" });
-	          const url = URL.createObjectURL(blob);
-	          const a = document.createElement("a");
-	          a.href = url;
-	          a.download = "IR_NETLIFY_Configs.txt"; 
-	          document.body.appendChild(a);
-	          a.click();
-	          
-	          setTimeout(() => {
-	              document.body.removeChild(a);
-	              window.URL.revokeObjectURL(url);
-	          }, 0);
-	      
-	          const btn = document.getElementById(btnId);
-	          btn.innerText = "COPIED & DOWNLOADED✓";
-	          btn.style.borderColor = "#ff4444"; 
-	          btn.style.color = "#ff4444";       
-	      
-	          setTimeout(() => {
-	              btn.innerText = "Copy & Download";
-	              btn.style.borderColor = "#3fb950"; 
-	              btn.style.color = "#3fb950";       
-	          }, 3000);
-	      }
-
-	      window.onload = () => { 
-	          setPlatform(); 
-	          loadDefaultIps(); 
-	          setNetlifyMode('shecan'); 
-	          setConfigMode('default'); 
-	      };
-	      
-	      
-	      async function pasteToArea(targetId) {
-	          const area = document.getElementById(targetId);
-	          try {
-	              const text = await navigator.clipboard.readText();
-	              if (text) {
-	                  area.value += (area.value ? '\n' : '') + text;
-	                  console.log("PASTED ✓.");
-	              }
-	          } catch (err) {
-	              alert("Copy failed. Please copy manually.");
-	              console.error("Failed to read clipboard: ", err);
-	          }
-	      }
-	      
-
-	   const infoData = {
-	      'netlify': {
-	          title: 'NETLIFY',
-	          content: `متود نتلیفای متودی مناسب برای اتصال به اینترنت بین الملل در شرایط کنونی<br><br>
-	          <span class="warning-text">⚠️ احتمال اتصال این متود با اشتراک پولی شکن : 99 درصد<\/span><br>
-	          <span class="warning-text">⚠️ احتمال اتصال این متود بدون اشتراک شکن : 5 درصد<\/span><br>
-	          <span class="warning-text">⚠️ ضمانتی بر ادامه عملکرد روی سرویس شکن نیست<\/span><br><br>
-	          کانال ما: <a href="https://t.me/IR_NETLIFY" target="_blank" style="color: var(--theme-netlify); text-decoration: none; font-weight: bold;">IR_NETLIFY@<\/a>`
-	      },
-	      'direct_sni': {
-	          title: 'Direct SNI',
-	          content: 'این حالت برای کاربرانی که <b>اشتراک شکن دارند<\/b> مناسب است'
-	      },
-	      'ip_sni': {
-	          title: 'IP + SNI',
-	          content: `این حالت برای کاربرانی که <b>اشتراک شکن ندارند<\/b> مناسب است<br><br>
-	          <span class="warning-text">⚠️ در این حالت تعداد کانفیگ ها زیاد است و بهتر است در ویندوز تست کنید<\/span>`
-	      },
-	      'parsa': {
-	          title: 'Parsa Server',
-	          content: 'این حالت از سرور Parsashonam@ استفاده میکنه'
-	      },
-	      'custom': {
-	          title: 'Your Server',
-	          content: `در این گزینه شما میتونید سرور خودتون رو بزنید<br><br>
-	          <span class="warning-text">⚠️ خط اول این فایل رو باید ادیت کنید و بعد آپلود کنید:<\/span><br>
-	          <code style="background: #0d1117; padding: 5px; border-radius: 6px; display: inline-block; margin-top: 8px; direction: ltr; border: 1px solid #30363d; font-size: 0.75rem;">netlify-relay-master\\netlify\\edge-functions\\relay.js<\/code>`
-	      },
-	      'gen_vless': {
-	          title: 'Generate VLESS Configs',
-	          content: 'ساخت کانفیگ vless'
-	      },
-	      'gen_json': {
-	          title: 'Generate Custom JSON',
-	          content: `ساخت کانفیگ کاستوم با لود بالانسر<br><br>
-	          <span class="warning-text">⚠️ برای استفاده از کانفیگ کاستوم باید آخرین نسخه v2rayN /v2rayNG و آپدیت هسته Xray استفاده کنید.<\/span>`
-	      }
-	   };
-
-
-	   function showInfo(event, key) {
-	      event.stopPropagation();
-	      const modal = document.getElementById('infoModal');
-	      
-	      if (infoData[key]) {
-	          document.getElementById('infoModalTitle').innerHTML = infoData[key].title;
-	          document.getElementById('infoModalBody').innerHTML = infoData[key].content;
-	          modal.classList.add('active');
-	      }
-	   }
-
-	   function closeInfoModal() {
-	      document.getElementById('infoModal').classList.remove('active');
-	   }
-
-	   window.addEventListener('click', function(event) {
-	      const modal = document.getElementById('infoModal');
-	      if (event.target === modal) {
-	          closeInfoModal();
-	      }
-	   });
-
-	</script>
-</body>
+			function getFormattedTimestamp() {
+				const now = new Date();
+				const year = now.getFullYear();
+				const month = String(now.getMonth() + 1).padStart(2, '0');
+				const day = String(now.getDate()).padStart(2, '0');
+				const hours = String(now.getHours()).padStart(2, '0');
+				const minutes = String(now.getMinutes()).padStart(2, '0');
+				const seconds = String(now.getSeconds()).padStart(2, '0');
+				return `${year}_${month}_${day}_${hours}-${minutes}-${seconds}`;
+			}
+		</script>
+	</body>
 </html>
