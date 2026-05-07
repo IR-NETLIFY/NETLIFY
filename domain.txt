@@ -1,1 +1,1 @@
-ir-netlify-2.netlify.app'
+ir-netlify-2.netlify.app
