@@ -1,0 +1,39 @@
+name: Auto Domain Monitor
+
+on:
+  schedule:
+    - cron: '*/10 * * * *' # هر 10 دقیقه اجرا می‌شود
+  workflow_dispatch: # امکان اجرای دستی
+
+permissions:
+  contents: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run Monitor
+        run: python monitor.py
+
+      - name: Commit and Push if changed
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add .
+          if git diff --quiet && git diff --staged --quiet; then
+            echo "No changes"
+          else
+            git commit -m "Auto-switch: Domain failed"
+            git push
+          fi
