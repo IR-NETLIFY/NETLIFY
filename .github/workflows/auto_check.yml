@@ -25,10 +25,12 @@ jobs:
       - name: Install dependencies
         run: pip install requests
 
-      - name: Run Monitor
-        run: python monitor.py
+      - name: Run Monitor and Generate Sub
+        run: |
+          python monitor.py
+          python generator.py # اضافه کردن این خط برای آپدیت همزمان ساب
 
-      - name: Commit and Push if changed
+      - name: Commit and Push all changes
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
@@ -36,6 +38,6 @@ jobs:
           if git diff --quiet && git diff --staged --quiet; then
             echo "No changes"
           else
-            git commit -m "Auto-switch: Domain failed"
+            git commit -m "Auto-switch: Domain updated and Sub regenerated"
             git push
           fi
