@@ -1,4 +1,3 @@
-teal-sprite-f29cb1.netlify.app
 leafy-yeot-838518.netlify.app
 playful-cheesecake-0f9732.netlify.app
 majestic-tiramisu-072905.netlify.app
