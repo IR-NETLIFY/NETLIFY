@@ -1,5 +1,7 @@
 teal-sprite-f29cb1.netlify.app
 jazzy-eclair-fb4402.netlify.app
+dainty-melba-d31410.netlify.app
+starlit-starburst-fc9065.netlify.app
 visionary-buttercream-f43f18.netlify.app
 irnetlify.netlify.app
 radiant-nougat-018c90.netlify.app
