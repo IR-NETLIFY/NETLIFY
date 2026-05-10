@@ -1,5 +1,3 @@
-teal-sprite-f29cb1.netlify.app
-jazzy-eclair-fb4402.netlify.app
 dainty-melba-d31410.netlify.app
 starlit-starburst-fc9065.netlify.app
 visionary-buttercream-f43f18.netlify.app
@@ -14,4 +12,3 @@ precious-sunflower-d0c68e.netlify.app
 inspiring-biscotti-f4797a.netlify.app
 majestic-melomakarona-b9a702.netlify.app
 leafy-yeot-838518.netlify.app
-
