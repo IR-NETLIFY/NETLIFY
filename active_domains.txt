@@ -1,2 +1,3 @@
 singular-peony-9302b9.netlify.app
+ir-netlify-2.netlify.app
 ir-netlify-subasdk9.netlify.app
