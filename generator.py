@@ -19,7 +19,7 @@ def run():
         {"name": "Alwinbalot", "address": "https://solar.latnashobivojod.shop:8096", "path": "/alwin", "user": "ccee709a-5766-4ced-a6ec-7b9d46cdd48d"}
     ]
 
-    new_snis = ["kubernetes.io", "jobset.sigs.k8s.io", "kwok.sigs.k8s.io"]
+    new_snis = ["kubernetes.io", "kueue.sigs.k8s.io", "kwok.sigs.k8s.io"]
     new_ips = ["144.76.1.88", "85.10.207.48", "94.130.33.41", "95.216.69.37", "204.12.196.34", "94.130.70.160", "138.201.54.122", "142.54.178.211", "63.141.252.203"]
 
     old_direct_snis = ["kubernetes.io", "letsencrypt.org", "kwok.sigs.k8s.io", "kind.sigs.k8s.io", "krew.sigs.k8s.io", "kueue.sigs.k8s.io", "jobset.sigs.k8s.io", "minikube.sigs.k8s.io", "kustomize.sigs.k8s.io", "cluster-api.sigs.k8s.io", "gateway-api.sigs.k8s.io", "image-builder.sigs.k8s.io", "kubectl.docs.kubernetes.io", "scheduler-plugins.sigs.k8s.io", "secrets-store-csi-driver.sigs.k8s.io"]
