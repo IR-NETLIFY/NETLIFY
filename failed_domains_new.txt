@@ -9,3 +9,4 @@ jazzy-eclair-fb4402.netlify.app
 dainty-melba-d31410.netlify.app
 starlit-starburst-fc9065.netlify.app
 ir-netlify-unlimited-new.netlify.app
+irnetlify.netlify.app
