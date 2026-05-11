@@ -14,3 +14,5 @@ teal-sprite-f29cb1.netlify.app
 kaleidoscopic-bienenstitch-13a28f.netlify.app
 statuesque-unicorn-6d76f6.netlify.app
 rad-lamington-3a2105.netlify.app
+iridescent-paprenjak-ac0fcd.netlify.app
+timely-chaja-21e640.netlify.app
