@@ -2,7 +2,7 @@ name: IR-NETLIFY Unified Monitor
 
 on:
   repository_dispatch:
-    types: [domain_failover]
+    types: [cloud_trigger]
   workflow_dispatch:
 
 permissions:
