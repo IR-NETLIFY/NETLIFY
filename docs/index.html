@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=450" />
-		<title>IR NETLIFY CONFIG GENERATOR V9.2.4</title>
+		<title>IR NETLIFY CONFIG GENERATOR V9.3.3</title>
 		<style>
 			@font-face {
 				font-family: "CustomFont";
@@ -597,13 +597,30 @@
 					transform: rotate(360deg);
 				}
 			}
+
+			#server-checkboxes label {
+				background: rgba(255, 255, 255, 0.05);
+				padding: 5px;
+				border-radius: 6px;
+				transition: 0s;
+			}
+
+			#server-checkboxes label:has(input:checked) {
+				background: rgba(0, 196, 13, 0.3);
+				border: 2px solid var(--neon-green);
+			}
+
+			#server-checkboxes input[type="checkbox"] {
+				accent-color: var(--neon-green);
+				transform: scale(1);
+			}
 		</style>
 	</head>
 	<body>
 		<div class="container">
 			<h2>
 				IR NETLIFY <br />
-				CONFIG GENERATOR V9.2.4
+				CONFIG GENERATOR V9.3.3
 			</h2>
 			<div class="tabs">
 				<button class="tab-btn active" id="tab-netlify">
@@ -659,16 +676,16 @@
 				</div>
 			</div>
 
-			<div id="default-settings" style="display: none; border: 1px solid var(--theme-netlify); padding: 15px; border-radius: 12px; margin-bottom: 15px; background: rgba(0, 225, 255, 0.02)">
+			<div id="default-settings" style="display: none; border: 2px solid var(--theme-netlify); padding: 15px; border-radius: 12px; margin-bottom: 15px; background: rgba(0, 225, 255, 0.02)">
 				<div class="input-group">
-					<label style="color: var(--theme-netlify)">select server</label>
-					<select id="server-select" class="styled-select">
-						<option value="server1">🌐 Parsa Server</option>
-						<option value="server2">🌐 Xarheon Server</option>
-						<option value="server3">🌐 OneSrv98 Server</option>
-						<option value="server4">🌐 Flare Server</option>
-						<option value="server5">🌐 Alwinbalot Server</option>
-					</select>
+					<label style="color: var(--theme-netlify)">Select Server</label>
+					<div id="server-checkboxes" style="display: grid; grid-template-columns: 1fr 1fr; gap: 5px; background: #0d1117; padding: 15px; border-radius: 10px; border: 2px solid #30363d">
+						<label style="display: flex; align-items: center; gap: 8px; color: white; text-transform: none; font-size: 0.75rem; cursor: pointer"> <input type="checkbox" name="server-choice" value="server1" /> Parsa </label>
+						<label style="display: flex; align-items: center; gap: 8px; color: white; text-transform: none; font-size: 0.75rem; cursor: pointer"> <input type="checkbox" name="server-choice" value="server2" /> Xarheon </label>
+						<label style="display: flex; align-items: center; gap: 8px; color: white; text-transform: none; font-size: 0.75rem; cursor: pointer"> <input type="checkbox" name="server-choice" value="server3" /> OneSrv98 </label>
+						<label style="display: flex; align-items: center; gap: 8px; color: white; text-transform: none; font-size: 0.75rem; cursor: pointer"> <input type="checkbox" name="server-choice" value="server4" /> Flare </label>
+						<label style="display: flex; align-items: center; gap: 8px; color: white; text-transform: none; font-size: 0.75rem; cursor: pointer"> <input type="checkbox" name="server-choice" value="server5" /> Alwinbalot </label>
+					</div>
 				</div>
 			</div>
 			<div class="input-group">
@@ -711,7 +728,7 @@
 			</button>
 			<div id="output-container">
 				<div class="success-header">
-					<span style="color: #00c40d; font-size: 0.8rem; font-weight: bold">✓ CONFIGS GENERATED</span>
+					<span id="config-count" style="color: var(--neon-orange); font-size: 0.8rem; font-weight: bold">✓ CONFIGS GENERATED</span>
 					<button class="action-btn btn-copy" id="copy-btn" onclick="copyToClipboard('result-area', 'copy-btn')">Copy & Download</button>
 				</div>
 				<textarea id="result-area" readonly></textarea>
@@ -741,7 +758,7 @@
 				},
 				server2: {
 					name: "Xarheon",
-					address: "xarheon.run.place",
+					address: "https://xarheon.run.place",
 					path: "/cdn2",
 					user: "f9b57060-989a-4d6d-bc58-53d767242968",
 				},
@@ -811,29 +828,40 @@
 			}
 
 			function loadDefaultDomains() {
+				const domainList = document.getElementById("domain-list");
 				const list = netlifyMode === "shecan" ? data.netlify_shecan.defaults : data.netlify_normal.defaults;
-				document.getElementById("domain-list").value = list.join("\n");
+				domainList.value = list.join("\n");
+				domainList.classList.remove("error-border");
 			}
 
 			function loadDefaultIps() {
-				document.getElementById("ip-list").value = data.netlify_shecan.ips.join("\n");
+				const ipList = document.getElementById("ip-list");
+				ipList.value = data.netlify_shecan.ips.join("\n");
+				ipList.classList.remove("error-border");
 			}
 			function loadBestDomains() {
-				document.getElementById("domain-list").value = data.Best_domains.join("\n");
+				const domainList = document.getElementById("domain-list");
+				domainList.value = data.Best_domains.join("\n");
+				domainList.classList.remove("error-border");
 			}
 
 			function loadBestIps() {
-				document.getElementById("ip-list").value = data.Best_ips.join("\n");
+				const ipList = document.getElementById("ip-list");
+				ipList.value = data.Best_ips.join("\n");
+				ipList.classList.remove("error-border");
 			}
 			function getInputs() {
 				let hasError = false;
+
 				const hostElement = document.getElementById("main-host");
 				const sniElement = document.getElementById("domain-list");
 				const ipElement = document.getElementById("ip-list");
+				const checkboxContainer = document.getElementById("server-checkboxes");
 
 				let rawHost = hostElement.value.trim();
 				let cleanHost = rawHost.replace(/^(https?:\/\/)?(www\.)?/, "").split("/")[0];
 				let host = cleanHost.replace(/[^a-zA-Z0-9.-]/g, "");
+
 				const sniInput = sniElement.value.trim();
 				const ipInput = ipElement.value.trim();
 
@@ -859,37 +887,44 @@
 					}
 				}
 
-				if (hasError) return null;
 				const domains = sniInput
 					.split("\n")
 					.map((d) => d.trim().replace(/[^a-zA-Z0-9.-]/g, ""))
 					.filter((d) => d.length > 0);
 
-				let user, path, serverAddress, serverName;
+				let selectedServers = [];
 
 				if (configMode === "custom") {
-					serverName = document.getElementById("custom-name").value.trim() || "CustomServer";
-					serverAddress = document.getElementById("custom-address").value.trim() || "example.com:443";
-					user = document.getElementById("custom-user").value.trim() || "your-uuid";
-					let p = document.getElementById("custom-path").value.trim();
-					path = p ? (p.startsWith("/") ? p : "/" + p) : "/";
+					let customPath = document.getElementById("custom-path").value.trim() || "/";
+					selectedServers.push({
+						name: document.getElementById("custom-name").value.trim() || "CustomServer",
+						address: document.getElementById("custom-address").value.trim() || "example.com:443",
+						user: document.getElementById("custom-user").value.trim() || "your-uuid",
+						path: customPath.startsWith("/") ? customPath : "/" + customPath,
+					});
 				} else {
-					const selectedKey = document.getElementById("server-select").value;
-					const srv = predefinedServers[selectedKey];
-					serverName = srv.name;
-					serverAddress = srv.address;
-					user = srv.user;
-					path = srv.path;
+					const checkedBoxes = document.querySelectorAll('input[name="server-choice"]:checked');
+
+					if (checkedBoxes.length === 0) {
+						showError(checkboxContainer);
+						hasError = true;
+					} else {
+						checkedBoxes.forEach((cb) => {
+							const srv = predefinedServers[cb.value];
+							if (srv) {
+								selectedServers.push(srv);
+							}
+						});
+					}
 				}
+
+				if (hasError) return null;
 
 				return {
 					host,
 					domains,
 					ips,
-					user,
-					path,
-					serverAddress,
-					serverName,
+					selectedServers,
 				};
 			}
 
@@ -904,31 +939,35 @@
 			function generateConfigs() {
 				const inputs = getInputs();
 				if (!inputs) return;
-				const { host, domains, ips, user, path, serverAddress, serverName } = inputs;
+
+				const { host, domains, ips, selectedServers } = inputs;
 				let results = [];
 
-				const extraJson = JSON.stringify({
-					headers: { "x-host": serverAddress },
-				});
-				const encodedExtra = encodeURIComponent(extraJson);
-				const encodedPath = encodeURIComponent(path);
+				selectedServers.forEach((srv) => {
+					const { user, path, address: serverAddress, name: serverName } = srv;
+					const extraJson = JSON.stringify({ headers: { "x-host": serverAddress } });
+					const encodedExtra = encodeURIComponent(extraJson);
+					const encodedPath = encodeURIComponent(path);
 
-				if (netlifyMode === "shecan") {
-					domains.forEach((sni) => {
-						ips.forEach((ip) => {
-							const remark = encodeURIComponent(`🌐 @IR_NETLIFY | ${sni} | ${ip} | ${serverName}`);
-							results.push(`vless://${user}@${ip}:443?encryption=none&security=tls&sni=${sni}&alpn=h2%2Chttp%2F1.1&insecure=1&allowInsecure=1&type=xhttp&host=${host}&path=${encodedPath}&mode=auto&extra=${encodedExtra}#${remark}`);
+					if (netlifyMode === "shecan") {
+						domains.forEach((sni) => {
+							ips.forEach((ip) => {
+								const remark = encodeURIComponent(`🌐 @IR_NETLIFY | ${sni} | ${ip} | ${serverName}`);
+								results.push(`vless://${user}@${ip}:443?encryption=none&security=tls&sni=${sni}&alpn=h2%2Chttp%2F1.1&insecure=1&allowInsecure=1&type=xhttp&host=${host}&path=${encodedPath}&mode=auto&extra=${encodedExtra}#${remark}`);
+							});
 						});
-					});
-				} else {
-					domains.forEach((sni) => {
-						const remark = encodeURIComponent(`🌐 @IR_NETLIFY | ${sni} | ${serverName}`);
-						results.push(`vless://${user}@${sni}:443?encryption=none&security=tls&sni=${sni}&alpn=h2%2Chttp%2F1.1&insecure=1&allowInsecure=1&type=xhttp&host=${host}&path=${encodedPath}&mode=auto&extra=${encodedExtra}#${remark}`);
-					});
-				}
+					} else {
+						domains.forEach((sni) => {
+							const remark = encodeURIComponent(`🌐 @IR_NETLIFY | ${sni} | ${serverName}`);
+							results.push(`vless://${user}@${sni}:443?encryption=none&security=tls&sni=${sni}&alpn=h2%2Chttp%2F1.1&insecure=1&allowInsecure=1&type=xhttp&host=${host}&path=${encodedPath}&mode=auto&extra=${encodedExtra}#${remark}`);
+						});
+					}
+				});
 
 				document.getElementById("result-area").value = results.join("\n");
 				document.getElementById("output-container").style.display = "block";
+
+				document.getElementById("config-count").innerText = `${results.length} CONFIGS GENERATED  ✓ `;
 			}
 
 			async function copyToClipboard(id, btnId) {
@@ -981,7 +1020,7 @@
 					btn.style.borderColor = "#00c40d";
 					btn.style.color = "#00c40d";
 				} else {
-					if (textToCopy.length > 800000) {
+					if (textToCopy.length > 8000000) {
 						alert("حجم متن بسیار زیاد است. فایل با موفقیت دانلود شد، از آن استفاده کنید.");
 					}
 					btn.innerText = "DOWNLOADED ✓ (Copy Failed)";
