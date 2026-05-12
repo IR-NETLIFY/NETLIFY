@@ -7,3 +7,4 @@ starlit-starburst-fc9065.netlify.app
 ir-netlify-unlimited-new.netlify.app
 irnetlify.netlify.app
 ir-netlify-unlimited-new.netlify.app
+teal-sprite-f29cb1.netlify.app
