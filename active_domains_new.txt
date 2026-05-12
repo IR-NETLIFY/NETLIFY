@@ -1,4 +1,3 @@
-teal-sprite-f29cb1.netlify.app
 ir-netlify-unlimited-new.netlify.app
 leafy-yeot-838518.netlify.app
 radiant-nougat-018c90.netlify.app
