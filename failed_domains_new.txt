@@ -8,3 +8,4 @@ ir-netlify-unlimited-new.netlify.app
 irnetlify.netlify.app
 ir-netlify-unlimited-new.netlify.app
 teal-sprite-f29cb1.netlify.app
+ir-neetlify-unlimited-new.netlify.app
