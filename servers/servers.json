@@ -131,12 +131,5 @@
     "path": "/xhttp444",
     "user": "c18d7142-3adc-491a-a0af-518a67d21c19",
     "flag": "fi"
-  },
-  "server20": {
-    "name": "Dante",
-    "address": "212.74.39.210:444",
-    "path": "/IR_NETLIFY",
-    "user": "%40IR_NETLIFY",
-    "flag": "gb"
   }
 }
