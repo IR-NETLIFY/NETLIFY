@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=480" />
-		<title>IR NETLIFY CONFIG GENERATOR V9.5.7</title>
+		<title>IR NETLIFY CONFIG GENERATOR V9.5.8</title>
 		<style>
 			@font-face {
 				font-family: "CustomFont";
@@ -663,7 +663,7 @@
 		<div class="container">
 			<h2>
 				IR NETLIFY <br />
-				CONFIG GENERATOR V9.5.7
+				CONFIG GENERATOR V9.5.8
 			</h2>
 			<div class="tabs">
 				<button class="tab-btn active" id="tab-netlify">
@@ -893,9 +893,9 @@
 				},
 				server5: {
 					name: "Alwinbalot",
-					address: "https://solar.latnashobivojod.shop:444",
+					address: "http://46.8.229.114:444",
 					path: "/balot",
-					user: "b9fd3eb8-65ba-4850-9b39-25c94bfc162e",
+					user: "%40IR_NETLIFY",
 				},
 				server6: {
 					name: "Mostafa",
@@ -965,7 +965,7 @@
 				},
 				server17: {
 					name: "DarkSoul",
-					address: "89.22.236.213:444",
+					address: "http://89.22.236.213:444",
 					path: "/IR_NETLIFY",
 					user: "%40IR_NETLIFY",
 				},
@@ -983,7 +983,7 @@
 				},
 				server20: {
 					name: "Dante",
-					address: "212.74.39.210:444",
+					address: "http://212.74.39.210:444",
 					path: "/IR_NETLIFY",
 					user: "%40IR_NETLIFY",
 				},
@@ -1180,8 +1180,11 @@
 					const { user, path, address: serverAddress, name: serverName } = srv;
 
 					let extraData = {
-						xPaddingBytes: "1-1",
-						scMaxEachPostBytes: "1000000",
+    					xPaddingBytes: "1-1",
+    					xPaddingObfsMode: true,
+    					scMaxEachPostBytes: "1000000",
+    					xPaddingKey: "iran",
+    					xPaddingHeader: "iran"
 					};
 
 					if (appVersion === "1.0.3") {
