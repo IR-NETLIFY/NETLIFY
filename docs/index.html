@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=480" />
-		<title>IR NETLIFY CONFIG GENERATOR V9.5.9</title>
+		<title>IR NETLIFY CONFIG GENERATOR V9.6.1</title>
 		<style>
 			@font-face {
 				font-family: "CustomFont";
@@ -644,7 +644,7 @@
 				max-width: 20px;
 				max-height: 20px;
 				object-fit: contain;
-				margin-right: 1px;
+				margin-right: 3px;
 			}
 
 			#server-checkboxes label {
@@ -656,6 +656,45 @@
 				height: 16px;
 				flex-shrink: 0;
 			}
+
+			.btn-purple {
+				background: transparent;
+				color: #b100ff;
+				border: 2px solid #b100ff;
+				padding: 10px;
+				border-radius: 12px;
+				cursor: pointer;
+				width: 100%;
+				font-weight: bold;
+				margin-top: 10px;
+				text-transform: uppercase;
+				transition: all 0.3s ease;
+			}
+
+			.btn-purple:hover {
+				background-color: #b100ff;
+				color: #fff;
+			}
+			.info-btn-styled {
+				width: 38px;
+				height: 38px;
+				background: transparent;
+				border: 2px solid #b100ff;
+				border-radius: 10px;
+				color: #b100ff;
+				cursor: pointer;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				transition: all 0.3s;
+				font-size: 1.2rem;
+				font-weight: bold;
+			}
+
+			.info-btn-styled:hover {
+				background: rgba(177, 0, 255, 0.1);
+				box-shadow: 0 0 10px #b100ff;
+			}
 		</style>
 	</head>
 	<body>
@@ -663,7 +702,7 @@
 		<div class="container">
 			<h2>
 				IR NETLIFY <br />
-				CONFIG GENERATOR V9.5.9
+				CONFIG GENERATOR V9.6.1
 			</h2>
 			<div class="tabs">
 				<button class="tab-btn active" id="tab-netlify">
@@ -806,7 +845,15 @@
 						</label>
 						<label style="display: flex; align-items: center; gap: 1px; color: white; font-size: 0.5rem; cursor: pointer; background: #161b22; padding: 5px; border-radius: 6px">
 							<input type="checkbox" name="server-choice" value="server22" />
-							<img src="https://hatscripts.github.io/circle-flags/flags/tr.svg" width="14" height="14" onerror="this.remove()" /> Manp
+							<img src="https://hatscripts.github.io/circle-flags/flags/tr.svg" width="14" height="14" onerror="this.remove()" /> Manp 1
+						</label>
+						<label style="display: flex; align-items: center; gap: 1px; color: white; font-size: 0.5rem; cursor: pointer; background: #161b22; padding: 5px; border-radius: 6px">
+							<input type="checkbox" name="server-choice" value="server23" />
+							<img src="https://hatscripts.github.io/circle-flags/flags/de.svg" width="14" height="14" onerror="this.remove()" /> Manp 2
+						</label>
+						<label style="display: flex; align-items: center; gap: 1px; color: white; font-size: 0.5rem; cursor: pointer; background: #161b22; padding: 5px; border-radius: 6px">
+							<input type="checkbox" name="server-choice" value="server24" />
+							<img src="https://hatscripts.github.io/circle-flags/flags/nl.svg" width="14" height="14" onerror="this.remove()" /> Phoenix
 						</label>
 					</div>
 				</div>
@@ -845,6 +892,10 @@
 				</div>
 				<textarea id="ip-list" placeholder="Enter IPs line by line..." rows="4"></textarea>
 			</div>
+			<div style="display: flex; gap: 10px; align-items: center; margin-bottom: 15px">
+				<button class="btn-purple" onclick="openXhttpModal()" style="flex: 1; margin-top: 0">xhttp Object</button>
+				<button class="info-btn-styled" onclick="openXhttpHelp()">?</button>
+			</div>
 			<button class="gen-btn" onclick="generateConfigs()">
 				Generate VLESS Configs
 				<span class="info-icon" onclick="showInfo(event, 'gen_vless')">?</span>
@@ -867,13 +918,75 @@
 				<div id="infoModalBody">Content</div>
 			</div>
 		</div>
+		<div class="info-modal-overlay" id="xhttpModal">
+			<div class="info-modal-content">
+				<button class="info-modal-close" onclick="closeXhttpModal()">×</button>
+				<h3 style="color: #b100ff; border-bottom-color: #b100ff">Custom xhttp Object</h3>
+				<textarea id="custom-xhttp-input" rows="8" placeholder='"xPaddingBytes": "10-50",&#10;"xPaddingObfsMode": true'></textarea>
+				<button class="btn-purple" style="margin-top: 15px" onclick="saveXhttpModal()">Save</button>
+				<button class="action-btn btn-clear" style="width: 100%; margin-top: 10px; padding: 10px" onclick="clearXhttpModal()">Clear & Use Default</button>
+			</div>
+		</div>
+		<div class="info-modal-overlay" id="xhttpHelpModal">
+			<div class="info-modal-content">
+				<button class="info-modal-close" onclick="closeXhttpHelp()">×</button>
+				<h3 style="color: #b100ff; border-bottom-color: #b100ff">xhttp Guide</h3>
+				<div style="text-align: left; font-size: 13px; line-height: 1.6">
+					<p>.Enter JSON key-value pairs without curly braces</p>
+					<p>:Example</p>
+					<pre style="background: #000; padding: 10px; border-radius: 8px; color: #b100ff">
+"xPaddingBytes": "10-50",
+"xPaddingObfsMode": true,
+"xPaddingKey": "Value"</pre
+					>
+					<p>.Note: "headers" object is managed automatically and should not be added here</p>
+				</div>
+			</div>
+		</div>
 		<script>
 			let appVersion = "1.0.3";
 			let currentPlatform = "netlify";
 			let netlifyMode = "shecan";
 			let configMode = "default";
 			let selectedCore = "xray";
+			let customXhttpStr = "";
 
+			function openXhttpModal() {
+				document.getElementById("xhttpModal").classList.add("active");
+			}
+
+			function closeXhttpModal() {
+				document.getElementById("xhttpModal").classList.remove("active");
+			}
+
+			function saveXhttpModal() {
+				const val = document.getElementById("custom-xhttp-input").value.trim();
+				if (val) {
+					try {
+						JSON.parse("{" + val + "}");
+						customXhttpStr = val;
+						closeXhttpModal();
+					} catch (e) {
+						alert("Invalid JSON Format");
+					}
+				} else {
+					customXhttpStr = "";
+					closeXhttpModal();
+				}
+			}
+
+			function clearXhttpModal() {
+				document.getElementById("custom-xhttp-input").value = "";
+				customXhttpStr = "";
+				closeXhttpModal();
+			}
+			function openXhttpHelp() {
+				document.getElementById("xhttpHelpModal").classList.add("active");
+			}
+
+			function closeXhttpHelp() {
+				document.getElementById("xhttpHelpModal").classList.remove("active");
+			}
 			const predefinedServers = {
 				server1: {
 					name: "parsashonam",
@@ -1002,13 +1115,25 @@
 					user: "%40IR_NETLIFY",
 				},
 				server22: {
-					name: "Manp",
+					name: "Manp 1",
 					address: "107.161.174.122:444",
 					path: "/IR_NETLIFY",
 					user: "%40IR_NETLIFY",
 				},
+				server23: {
+					name: "Manp 2",
+					address: "107.161.174.122:444",
+					path: "/IR_NETLIFY",
+					user: "%40IR_NETLIFY",
+				},
+				server24: {
+					name: "Phoenix",
+					address: "62.84.172.72:444",
+					path: "/IR_NETLIFY",
+					user: "%40IR_NETLIFY",
+				},
 			};
-			
+
 			const sharedDefaults = ["helm.sh", "keda.sh", "rook.io", "istio.io", "cilium.io", "vuejs.org", "nuxt.com", "nuxr.com", "vitejs.dev", "smashingmagazine.com", "pnpm.io", "fluxcd.io", "harbor.io", "calico.org", "linkerd.io", "openebs.io", "tekton.dev", "longhorn.io", "blog.helm.sh", "docs.helm.sh", "crossplane.io", "kubernetes.io", "kubebuilder.io", "cert-manager.io", "letsencrypt.org", "kind.sigs.k8s.io", "kops.sigs.k8s.io", "krew.sigs.k8s.io", "kwok.sigs.k8s.io", "kueue.sigs.k8s.io", "jobset.sigs.k8s.io", "kaniko.sigs.k8s.io", "minikube.sigs.k8s.io", "operatorframework.io", "container.sigs.k8s.io", "kustomize.sigs.k8s.io", "argo-cd.readthedocs.io", "cluster-api.sigs.k8s.io", "descheduler.sigs.k8s.io", "gateway-api.sigs.k8s.io", "external-dns.sigs.k8s.io", "service-apis.sigs.k8s.io", "image-builder.sigs.k8s.io", "kubectl.docs.kubernetes.io", "metrics-server.sigs.k8s.io", "scheduler-plugins.sigs.k8s.io", "controller-runtime.sigs.k8s.io", "prometheus-operator.sigs.k8s.io", "node-feature-discovery.sigs.k8s.io", "hierarchical-namespaces.sigs.k8s.io", "secrets-store-csi-driver.sigs.k8s.io", "security-profiles-operator.sigs.k8s.io", "cluster-proportional-autoscaler.sigs.k8s.io"];
 			const data = {
 				netlify_normal: {
@@ -1132,14 +1257,14 @@
 					} else {
 						ips = ipInput
 							.split("\n")
-							.map((i) => i.trim().replace(/[^a-fA-F0-9.:]/g, ""))
+							.map((i) => i.trim().replace(/[^a-zA-Z0-9.:-]/g, ""))
 							.filter((i) => i.length > 0);
 					}
 				}
 
 				const domains = sniInput
 					.split("\n")
-					.map((d) => d.trim().replace(/[^a-zA-Z0-9.-]/g, ""))
+					.map((d) => d.trim().replace(/[^a-zA-Z0-9.:-]/g, ""))
 					.filter((d) => d.length > 0);
 
 				let selectedServers = [];
@@ -1199,29 +1324,36 @@
 				selectedServers.forEach((srv) => {
 					const { user, path, address: serverAddress, name: serverName } = srv;
 
-					let extraData;
+					let extraData = {};
+
+					if (customXhttpStr) {
+						try {
+							extraData = JSON.parse("{" + customXhttpStr + "}");
+						} catch (e) {}
+					} else {
+						if (serverName === "parsashonam") {
+							extraData = {
+								xPaddingBytes: "10-50",
+								xPaddingObfsMode: true,
+								xPaddingKey: "Parsashonam",
+								xPaddingHeader: "Parsashonam",
+								scMaxEachPostBytes: 1000000,
+							};
+						} else {
+							extraData = {
+								xPaddingBytes: "1-1",
+								xPaddingObfsMode: true,
+								scMaxEachPostBytes: "1000000",
+								xPaddingKey: "iran",
+								xPaddingHeader: "iran",
+							};
+						}
+					}
 
 					if (serverName === "parsashonam") {
-						extraData = {
-							headers: { "x-host": serverAddress }, 
-							xPaddingBytes: "10-50",
-							xPaddingObfsMode: true,
-							xPaddingKey: "Parsashonam",
-							xPaddingHeader: "Parsashonam",
-							scMaxEachPostBytes: 1000000
-						};
-					} else {
-						extraData = {
-							xPaddingBytes: "1-1",
-							xPaddingObfsMode: true,
-							scMaxEachPostBytes: "1000000",
-							xPaddingKey: "iran",
-							xPaddingHeader: "iran"
-						};
-
-						if (appVersion === "1.0.3") {
-							extraData.headers = { "x-host": serverAddress };
-						}
+						extraData.headers = { "x-host": serverAddress };
+					} else if (appVersion === "1.0.3") {
+						extraData.headers = { "x-host": serverAddress };
 					}
 
 					const encodedExtra = encodeURIComponent(JSON.stringify(extraData));
