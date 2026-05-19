@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ورود به کانفیگ ساز</title>
+    <style>
+        /* تنظیمات پایه */
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #e5e8ec; /* رنگ پس‌زمینه بیرون پنجره */
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, Tahoma, "Vazirmatn", "Vazir", sans-serif;
+        }
+
+        /* استایل پنجره اصلی (مشابه پنجره برنامه در عکس) */
+        .app-window {
+            background-color: #f4f5f7;
+            border-radius: 14px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+            width: 90%;
+            max-width: 480px;
+            overflow: hidden;
+            border: 1px solid #d1d5db;
+        }
+
+        /* نوار بالای پنجره (دکمه‌های مک) */
+        .title-bar {
+            padding: 14px 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            direction: ltr; /* برای قرارگیری دکمه ها در سمت چپ */
+        }
+
+        .mac-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .dot-close { background-color: #ff5f56; }
+        .dot-minimize { background-color: #ffbd2e; }
+        .dot-maximize { background-color: #27c93f; }
+
+        /* باکس محتوای سفید رنگ داخلی */
+        .content-card {
+            background-color: #ffffff;
+            margin: 0 16px 16px 16px;
+            padding: 50px 24px;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+            border: 1px solid #eef0f3;
+        }
+
+        /* استایل متن */
+        .main-text {
+            color: #1e293b; /* رنگ تیره مشابه تیترهای عکس */
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 35px;
+            line-height: 1.6;
+        }
+
+        /* استایل دکمه (طراحی شده دقیقاً مشابه دکمه سرمه‌ای/تیره Disconnect) */
+        .primary-btn {
+            display: inline-block;
+            background-color: #283546; /* رنگ سرمه‌ای تیره مشابه عکس */
+            color: #ffffff;
+            text-decoration: none;
+            padding: 14px 40px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .primary-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-window">
+        <div class="title-bar">
+            <div class="mac-dot dot-close"></div>
+            <div class="mac-dot dot-minimize"></div>
+            <div class="mac-dot dot-maximize"></div>
+        </div>
+        
+        <div class="content-card">
+            <div class="main-text">برای ورود به سایت کانفیگ ساز کلیک کنید</div>
+            <a href="https://ir-netlify.github.io/NETLIFY" class="primary-btn">ورود</a>
+        </div>
+    </div>
+
+</body>
+</html>
