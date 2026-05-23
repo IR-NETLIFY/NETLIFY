@@ -1040,6 +1040,59 @@
 			body.dark-theme #theme-toggle:hover {
 				color: var(--accent);
 			}
+			.donate-btn {
+				background: rgba(220, 38, 38, 0.05);
+				border: 1px solid rgba(220, 38, 38, 0.15);
+				padding: 6px 14px;
+				border-radius: 50px;
+				color: var(--text) !important;
+				transition: all 0.2s ease;
+			}
+
+			.donate-btn:hover {
+				background: rgba(220, 38, 38, 0.12);
+				border-color: var(--accent-red);
+				transform: translateY(-2px);
+				box-shadow: 0 4px 12px rgba(220, 38, 38, 0.1);
+			}
+
+			body.dark-theme .donate-btn {
+				background: rgba(220, 38, 38, 0.1);
+				border-color: rgba(220, 38, 38, 0.2);
+			}
+
+			body.dark-theme .donate-btn:hover {
+				background: rgba(220, 38, 38, 0.2);
+				border-color: var(--accent-red);
+			}
+
+			@keyframes heartPulse {
+				0% {
+					transform: scale(1);
+				}
+				50% {
+					transform: scale(1.15);
+				}
+				100% {
+					transform: scale(1);
+				}
+			}
+			.pulse-icon {
+				animation: heartPulse 2s infinite;
+			}
+			.footer-col {
+				flex: 1;
+			}
+
+			.footer-col.center {
+				display: flex;
+				justify-content: center;
+			}
+
+			.footer-col:last-child {
+				display: flex;
+				justify-content: flex-end;
+			}
 		</style>
 	</head>
 	<body>
@@ -1055,7 +1108,7 @@
 					<a href="https://github.com/IR-NETLIFY" target="_blank" style="color: inherit; text-decoration: none; cursor: pointer">IR NETLIFY Config Generator</a>
 				</div>
 				<div class="titlebar-right">
-					<div class="header-badge">Live · V10.0.0</div>
+					<div class="header-badge">Live · V10.0.1</div>
 				</div>
 			</div>
 			<div class="app-header">
@@ -1195,7 +1248,12 @@
 						</div>
 					</a>
 				</div>
-				<div class="footer-col center"></div>
+				<div class="footer-col center">
+					<a href="https://donatonion.ir-netlify.workers.dev/" target="_blank" class="donate-btn">
+						<i class="fa-solid fa-heart pulse-icon" style="color: var(--accent-red); font-size: 0.85rem"></i>
+						<span>حمایت مالی از پروژه</span>
+					</a>
+				</div>
 				<div class="footer-col right">
 					<a href="https://t.me/IR_NETLIFY" target="_blank">
 						<i class="fa-brands fa-telegram" style="color: var(--accent); font-size: 1rem"></i>
@@ -1349,7 +1407,7 @@
 
 			var predefinedServers = {
 				server1: { name: "Parsa", address: "netlify.parsashonam.sbs:444", path: "/p4r34m", user: "Telegram-Parsashonam" },
-				server2: { name: "Xarheon", address: "panel.xarheon.cn.mt", path: "/cdn2", user: "f9b57060-989a-4d6d-bc58-53d767242968"},
+				server2: { name: "Xarheon", address: "panel.xarheon.cn.mt", path: "/cdn2", user: "f9b57060-989a-4d6d-bc58-53d767242968" },
 				server3: { name: "BEHNAM", address: "https://s1.onesrv98.eu.cc:444", path: "/mine", user: "a5c04120-8f0d-4d52-8cdd-9ffff79a777d", status: "offline" },
 				server4: { name: "Saman 1", address: "65.109.216.19:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY", status: "offline" },
 				server5: { name: "Alwinbalot", address: "http://46.8.229.114:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY" },
@@ -1746,7 +1804,7 @@
 				var inputs = getInputs();
 				if (!inputs) return;
 
-				var hosts = inputs.hosts; 
+				var hosts = inputs.hosts;
 				var domains = inputs.domains;
 				var ips = inputs.ips;
 				var selectedServers = inputs.selectedServers;
@@ -1939,7 +1997,7 @@
 						}
 					})
 					.catch(function (e) {
-						alert("⚠️ بررسی ناموفق بود. اتصال VPN را بررسی کنید");
+						alert("⚠️ برسی ناموفق بود. اتصال VPN را بررسی کنید");
 						console.error("Connection Error:", e);
 					})
 					.finally(function () {
