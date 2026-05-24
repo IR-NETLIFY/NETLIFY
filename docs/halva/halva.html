@@ -33,7 +33,7 @@
 					<div class="text-[12px] md:text-[13px] font-semibold text-gray-500 md:absolute md:left-1/2 md:transform md:-translate-x-1/2 tracking-tight">IR NETLIFY Project Generator</div>
 					<div class="text-[10px] md:text-[11px] font-bold text-blue-600 bg-blue-100/60 px-2.5 py-1 md:px-3 md:py-1.5 rounded-full flex items-center gap-1.5 shrink-0">
 						<span class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
-						LIVE · V1.1.0
+						LIVE · V1.1.1
 					</div>
 				</div>
 
@@ -240,11 +240,13 @@
 			}
 
 			function getWords() {
-				return Array.from({ length: 20 }, () => {
-					const adj = fallbackAdjectives[Math.floor(Math.random() * fallbackAdjectives.length)];
-					const noun = fallbackNouns[Math.floor(Math.random() * fallbackNouns.length)];
-					return Math.random() > 0.5 ? adj : noun;
-				});
+    			const uniqueWords = new Set();
+    			while (uniqueWords.size < 20) {
+        			const adj = fallbackAdjectives[Math.floor(Math.random() * fallbackAdjectives.length)];
+        			const noun = fallbackNouns[Math.floor(Math.random() * fallbackNouns.length)];
+        			uniqueWords.add(Math.random() > 0.5 ? adj : noun);
+    			}
+    			return Array.from(uniqueWords);
 			}
 
 			function generateFakeHTML() {
