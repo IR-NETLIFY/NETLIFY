@@ -33,7 +33,7 @@
 					<div class="text-[12px] md:text-[13px] font-semibold text-gray-500 md:absolute md:left-1/2 md:transform md:-translate-x-1/2 tracking-tight">IR NETLIFY Project Generator</div>
 					<div class="text-[10px] md:text-[11px] font-bold text-blue-600 bg-blue-100/60 px-2.5 py-1 md:px-3 md:py-1.5 rounded-full flex items-center gap-1.5 shrink-0">
 						<span class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
-						LIVE · V1.1.1
+						LIVE · V1.1.2
 					</div>
 				</div>
 
@@ -41,9 +41,6 @@
 					<div class="mb-6 md:mb-8 text-center md:text-left">
 						<div class="flex items-center justify-center md:justify-start gap-2 mb-1.5">
 							<h1 class="text-2xl md:text-[28px] font-bold text-[#1F2937] tracking-tight">IR NETLIFY</h1>
-							<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 md:h-6 md:w-6 text-[#1F2937]" viewBox="0 0 24 24" fill="currentColor">
-								<path d="M21.64 13a1 1 0 0 0-1.05-.14 8.05 8.05 0 0 1-3.37.73A8.15 8.15 0 0 1 9.08 5.49a8.59 8.59 0 0 1 .25-2 1 1 0 0 0-1.33-1.13 10.14 10.14 0 1 0 14 11.69 1 1 0 0 0-.36-1.05Zm-9.5 6.69A8.14 8.14 0 0 1 7.08 5.22v.27A10.15 10.15 0 0 0 17.22 15.63a9.79 9.79 0 0 0 2.1-.22 8.11 8.11 0 0 1-7.18 4.31Z" />
-							</svg>
 						</div>
 						<p class="text-[12px] md:text-[13px] text-gray-500 font-medium max-w-xs mx-auto md:mx-0">Download Netlify Edge Function Base Files</p>
 					</div>
@@ -66,7 +63,7 @@
 							<span>Developed by <span class="font-bold text-gray-700 group-hover:text-blue-500 transition">IR_NETLIFY</span></span>
 						</a>
 
-						<a href="https://donatonion.ir-netlify.workers.dev" target="_blank" class="bg-red-50 text-red-500 px-4 py-1.5 rounded-full flex items-center shrink-0 gap-1.5 cursor-pointer hover:bg-red-100 transition active:scale-95 order-1 md:order-2 shadow-sm border border-red-100">
+						<a href="https://donatonion.ir-netlify.workers.dev" target="_blank" class="bg-red-50 text-red-500 px-4 py-1.5 rounded-full flex items-center shrink-0 gap-1.5 cursor-pointer hover:bg-red-100 transition active:scale-95 order-1 md:order-2 shadow-sm border-2 border-red-500">
 							<svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor">
 								<path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
 							</svg>
@@ -240,13 +237,13 @@
 			}
 
 			function getWords() {
-    			const uniqueWords = new Set();
-    			while (uniqueWords.size < 20) {
-        			const adj = fallbackAdjectives[Math.floor(Math.random() * fallbackAdjectives.length)];
-        			const noun = fallbackNouns[Math.floor(Math.random() * fallbackNouns.length)];
-        			uniqueWords.add(Math.random() > 0.5 ? adj : noun);
-    			}
-    			return Array.from(uniqueWords);
+				const uniqueWords = new Set();
+				while (uniqueWords.size < 20) {
+					const adj = fallbackAdjectives[Math.floor(Math.random() * fallbackAdjectives.length)];
+					const noun = fallbackNouns[Math.floor(Math.random() * fallbackNouns.length)];
+					uniqueWords.add(Math.random() > 0.5 ? adj : noun);
+				}
+				return Array.from(uniqueWords);
 			}
 
 			function generateFakeHTML() {
@@ -385,7 +382,7 @@
 									const cleanWord = (idx) => (fileWords[idx] || "leaf").replace(/[^a-z0-9]/gi, "").toLowerCase();
 									const randomFileName = `template-${cleanWord(0)}-${cleanWord(1)}-${Math.floor(Math.random() * 9000) + 1000}.html`;
 
-									zip.folder("public").file(randomFileName, htmlContent);
+									zip.folder("Template Sites").file(randomFileName, htmlContent);
 								});
 							}
 						}
