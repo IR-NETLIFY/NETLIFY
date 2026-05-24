@@ -1093,6 +1093,25 @@
 				display: flex;
 				justify-content: flex-end;
 			}
+
+			.input-label a.gold-btn {
+				color: #ca8a04;
+				border-color: rgba(202, 138, 4, 0.3);
+				background: rgba(202, 138, 4, 0.05);
+			}
+			.input-label a.gold-btn:hover {
+				background: rgba(202, 138, 4, 0.12);
+				border-color: #ca8a04;
+			}
+			body.dark-theme .input-label a.gold-btn {
+				color: #facc15;
+				border-color: rgba(250, 204, 21, 0.3);
+				background: rgba(250, 204, 21, 0.05);
+			}
+			body.dark-theme .input-label a.gold-btn:hover {
+				background: rgba(250, 204, 21, 0.15);
+				border-color: #facc15;
+			}
 		</style>
 	</head>
 	<body>
@@ -1108,7 +1127,7 @@
 					<a href="https://github.com/IR-NETLIFY" target="_blank" style="color: inherit; text-decoration: none; cursor: pointer">IR NETLIFY Config Generator</a>
 				</div>
 				<div class="titlebar-right">
-					<div class="header-badge">Live · V10.0.4</div>
+					<div class="header-badge">Live · V10.0.5</div>
 				</div>
 			</div>
 			<div class="app-header">
@@ -1182,8 +1201,9 @@
 					</div>
 					<div class="divider"></div>
 					<div class="input-group">
-						<div class="input-label">
+						<div class="input-label" style="position: relative; justify-content: space-between">
 							<span>Netlify Domain</span>
+							<a href="https://github.com/IR-NETLIFY/IR_NETLIFY-RELAY/releases" target="_blank" class="gold-btn" style="position: absolute; left: 50%; transform: translateX(-50%)">🥮 Project update 🥮</a>
 							<a href="https://t.me/IR_NETLIFY/255" target="_blank">Get Netlify Domain ↗</a>
 						</div>
 						<div id="hosts-container">
@@ -1410,7 +1430,7 @@
 				server2: { name: "Xarheon", address: "panel.xarheon.cn.mt", path: "/cdn2", user: "f9b57060-989a-4d6d-bc58-53d767242968" },
 				server3: { name: "BEHNAM", address: "https://s1.onesrv98.eu.cc:444", path: "/mine", user: "a5c04120-8f0d-4d52-8cdd-9ffff79a777d", status: "offline" },
 				server4: { name: "Saman 1", address: "65.109.216.19:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY", status: "offline" },
-				server5: { name: "Alwinbalot", address: "http://46.8.229.114:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY" , status: "offline"},
+				server5: { name: "Alwinbalot", address: "http://46.8.229.114:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY", status: "offline" },
 				server6: { name: "Mostafa", address: "http://1.gymnation.ir:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY", status: "offline" },
 				server7: { name: "Farshid", address: "http://aa.websooj.site:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY" },
 				server8: { name: "mohsen", address: "150.241.91.212:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY" },
@@ -1420,10 +1440,10 @@
 				server12: { name: "Pouya", address: "http://76.13.14.51:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY" },
 				server13: { name: "Masoud", address: "http://104.234.135.93:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY", status: "offline" },
 				server14: { name: "Navid", address: "https://irnetlify.navtechz.com:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY" },
-				server15: { name: "AbolUp", address: "45.39.33.63:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY"},
+				server15: { name: "AbolUp", address: "45.39.33.63:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY" },
 				server16: { name: "Hossein", address: "http://str.fiathusen.homes:444", path: "/IR-NETLIFY", user: "598cbaec-00f6-4d84-8644-b35fdcec6904", status: "offline" },
 				server17: { name: "DarkSoul", address: "http://89.22.236.213:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY" },
-				server18: { name: "Meshke", address: "91.107.243.126:443", path: "/imissher", user: "5ded7058-f8f4-48fc-936f-3f900ce3fcbf", status: "offline"},
+				server18: { name: "Meshke", address: "91.107.243.126:443", path: "/imissher", user: "5ded7058-f8f4-48fc-936f-3f900ce3fcbf", status: "offline" },
 				server19: { name: "Rahgozar", address: "https://sr1.rahgozar.tr:444", path: "/xhttp444", user: "c18d7142-3adc-491a-a0af-518a67d21c19", status: "offline" },
 				server20: { name: "Dante", address: "http://212.74.39.210:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY", status: "offline" },
 				server21: { name: "LetKnowIt", address: "65.109.221.153:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY" },
@@ -1431,7 +1451,7 @@
 				server23: { name: "Manp 2", address: "217.179.5.74:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY" },
 				server24: { name: "Phoenix", address: "62.84.172.72:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY" },
 				server25: { name: "cowboy", address: "185.250.41.220:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY", status: "offline" },
-				server26: { name: "Hakan", address: "109.120.187.145:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY" , status: "offline"},
+				server26: { name: "Hakan", address: "109.120.187.145:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY", status: "offline" },
 				server27: { name: "nemidonam1", address: "193.233.202.166:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY" },
 				server28: { name: "Soroush", address: "194.59.183.234:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY" },
 				server29: { name: "nemidonam2", address: "89.208.97.163:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY" },
