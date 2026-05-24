@@ -1112,6 +1112,38 @@
 				background: rgba(250, 204, 21, 0.15);
 				border-color: #facc15;
 			}
+			.domain-header {
+				position: relative;
+				justify-content: space-between;
+			}
+			.center-btn {
+				position: absolute;
+				left: 50%;
+				transform: translateX(-50%);
+			}
+
+			@media (max-width: 600px) {
+				.domain-header {
+					flex-direction: column;
+					align-items: stretch;
+					gap: 12px;
+				}
+				.center-btn {
+					position: static;
+					transform: none;
+				}
+				.domain-header a {
+					text-align: center;
+					width: 100%;
+					justify-content: center;
+				}
+
+				.container {
+					width: 98% !important;
+					padding: 15px !important;
+					margin: 5px auto !important;
+				}
+			}
 		</style>
 	</head>
 	<body>
@@ -1201,9 +1233,9 @@
 					</div>
 					<div class="divider"></div>
 					<div class="input-group">
-						<div class="input-label" style="position: relative; justify-content: space-between">
+						<div class="input-label domain-header">
 							<span>Netlify Domain</span>
-							<a href="https://github.com/IR-NETLIFY/IR_NETLIFY-RELAY/releases" target="_blank" class="gold-btn" style="position: absolute; left: 50%; transform: translateX(-50%)">🥮 Project update 🥮</a>
+							<a href="https://github.com/IR-NETLIFY/IR_NETLIFY-RELAY/releases" target="_blank" class="gold-btn center-btn">Project update 🥮</a>
 							<a href="https://t.me/IR_NETLIFY/255" target="_blank">Get Netlify Domain ↗</a>
 						</div>
 						<div id="hosts-container">
@@ -1270,7 +1302,7 @@
 				</div>
 				<div class="footer-col center">
 					<a href="https://donatonion.ir-netlify.workers.dev/" target="_blank" class="donate-btn">
-						<i class="fa-solid fa-heart pulse-icon" style="color: var(--accent-red); font-size: 0.85rem"></i>
+						<i class="fa-solid fa-heart pulse-icon" style="color: var(--accent-red); font-size: 0.95rem"></i>
 						<span>حمایت مالی از پروژه</span>
 					</a>
 				</div>
