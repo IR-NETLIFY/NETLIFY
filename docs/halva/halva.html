@@ -351,7 +351,7 @@
 					zip.folder("netlify").folder("edge-functions").file(`${funcName}.js`, relayJs);
 
 					try {
-						const listResponse = await fetch("https://raw.githubusercontent.com/IR-NETLIFY/NETLIFY/refs/heads/main/halva/list.txt");
+						const listResponse = await fetch("https://raw.githubusercontent.com/IR-NETLIFY/NETLIFY/refs/heads/main/docs/list.txt");
 
 						if (listResponse.ok) {
 							const listText = await listResponse.text();
