@@ -107,8 +107,8 @@
 				gap: 10px;
 			}
 			.dot {
-				width: 23px;
-				height: 23px;
+				width: 25px;
+				height: 25px;
 				border-radius: 50%;
 				cursor: default;
 				transition: filter 0.15s;
@@ -1212,7 +1212,7 @@
 					<a href="https://github.com/IR-NETLIFY" target="_blank" style="color: inherit; text-decoration: none; cursor: pointer">IR NETLIFY Config Generator</a>
 				</div>
 				<div class="titlebar-right">
-					<div class="header-badge">V10.0.6</div>
+					<div class="header-badge">V10.0.7</div>
 				</div>
 			</div>
 			<div class="app-header">
@@ -1332,7 +1332,7 @@
 					<div class="toggle-row">
 						<span class="toggle-label-text">allowInsecure</span>
 						<label class="switch">
-							<input type="checkbox" id="insecure-toggle" checked />
+							<input type="checkbox" id="insecure-toggle" />
 							<span class="slider"></span>
 						</label>
 					</div>
@@ -1515,38 +1515,40 @@
 				server27: "us",
 				server28: "de",
 				server29: "fr",
+				server30: "nl",
 			};
 
 			var predefinedServers = {
 				server1: { name: "Parsa", address: "netlify.parsashonam.sbs:444", path: "/p4r34m", user: "Telegram-Parsashonam" },
-				server2: { name: "Xarheon", address: "panel.xarheon.cn.mt", path: "/cdn2", user: "f9b57060-989a-4d6d-bc58-53d767242968" },
+				server2: { name: "Xarheon", address: "panel.xarheon.cn.mt", path: "/cdn2", user: "f9b57060-989a-4d6d-bc58-53d767242968", status: "offline" },
 				server3: { name: "BEHNAM", address: "https://s1.onesrv98.eu.cc:444", path: "/mine", user: "a5c04120-8f0d-4d52-8cdd-9ffff79a777d", status: "offline" },
 				server4: { name: "Saman 1", address: "65.109.216.19:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY", status: "offline" },
 				server5: { name: "Alwinbalot", address: "http://46.8.229.114:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY", status: "offline" },
 				server6: { name: "Mostafa", address: "http://1.gymnation.ir:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY", status: "offline" },
-				server7: { name: "Farshid", address: "http://aa.websooj.site:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY" },
-				server8: { name: "mohsen", address: "150.241.91.212:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY" },
-				server9: { name: "Ali", address: "http://185.181.208.92:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY" },
-				server10: { name: "shabgard", address: "http://cdn.lindasannp.com:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY" },
+				server7: { name: "Farshid", address: "http://aa.websooj.site:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY", status: "offline" },
+				server8: { name: "mohsen", address: "150.241.91.212:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY", status: "offline" },
+				server9: { name: "Ali", address: "http://185.181.208.92:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY", status: "offline" },
+				server10: { name: "shabgard", address: "http://cdn.lindasannp.com:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY", status: "offline" },
 				server11: { name: "Saman 2", address: "https://ppp.sam4.lol:30903", path: "/asekhi", user: "132f0ba3-ebbe-4153-84ff-63161b841ed8", status: "offline" },
 				server12: { name: "Pouya", address: "http://76.13.14.51:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY" },
 				server13: { name: "Masoud", address: "http://104.234.135.93:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY", status: "offline" },
-				server14: { name: "Navid", address: "https://irnetlify.navtechz.com:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY" },
-				server15: { name: "AbolUp", address: "45.39.33.63:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY" },
+				server14: { name: "Navid", address: "https://irnetlify.navtechz.com:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY", status: "offline" },
+				server15: { name: "AbolUp", address: "45.39.33.63:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY", status: "offline" },
 				server16: { name: "Hossein", address: "http://str.fiathusen.homes:444", path: "/IR-NETLIFY", user: "598cbaec-00f6-4d84-8644-b35fdcec6904", status: "offline" },
-				server17: { name: "DarkSoul", address: "http://89.22.236.213:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY" },
+				server17: { name: "DarkSoul", address: "http://89.22.236.213:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY", status: "offline" },
 				server18: { name: "Meshke", address: "91.107.243.126:443", path: "/imissher", user: "5ded7058-f8f4-48fc-936f-3f900ce3fcbf", status: "offline" },
 				server19: { name: "Rahgozar", address: "https://sr1.rahgozar.tr:444", path: "/xhttp444", user: "c18d7142-3adc-491a-a0af-518a67d21c19", status: "offline" },
 				server20: { name: "Dante", address: "http://212.74.39.210:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY", status: "offline" },
-				server21: { name: "LetKnowIt", address: "65.109.221.153:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY" },
-				server22: { name: "Manp 1", address: "107.161.174.122:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY" },
-				server23: { name: "Manp 2", address: "217.179.5.74:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY" },
-				server24: { name: "Phoenix", address: "62.84.172.72:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY" },
+				server21: { name: "LetKnowIt", address: "65.109.221.153:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY", status: "offline" },
+				server22: { name: "Manp 1", address: "107.161.174.122:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY", status: "offline" },
+				server23: { name: "Manp 2", address: "217.179.5.74:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY", status: "offline" },
+				server24: { name: "Phoenix", address: "62.84.172.72:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY", status: "offline" },
 				server25: { name: "cowboy", address: "185.250.41.220:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY", status: "offline" },
 				server26: { name: "Hakan", address: "109.120.187.145:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY", status: "offline" },
-				server27: { name: "nemidonam1", address: "193.233.202.166:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY" },
-				server28: { name: "Soroush", address: "194.59.183.234:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY" },
+				server27: { name: "nemidonam1", address: "193.233.202.166:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY", status: "offline" },
+				server28: { name: "Soroush", address: "194.59.183.234:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY", status: "offline" },
 				server29: { name: "nemidonam2", address: "89.208.97.163:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY" },
+				server30: { name: "Hormoz", address: "http://tifona.maricon.eu.cc:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY" },
 			};
 
 			var sharedDefaults = ["helm.sh", "keda.sh", "rook.io", "istio.io", "cilium.io", "vuejs.org", "nuxt.com", "nuxr.com", "vitejs.dev", "smashingmagazine.com", "pnpm.io", "fluxcd.io", "harbor.io", "calico.org", "linkerd.io", "openebs.io", "tekton.dev", "longhorn.io", "blog.helm.sh", "docs.helm.sh", "crossplane.io", "kubernetes.io", "kubebuilder.io", "cert-manager.io", "letsencrypt.org", "kind.sigs.k8s.io", "kops.sigs.k8s.io", "krew.sigs.k8s.io", "kwok.sigs.k8s.io", "kueue.sigs.k8s.io", "jobset.sigs.k8s.io", "kaniko.sigs.k8s.io", "minikube.sigs.k8s.io", "operatorframework.io", "container.sigs.k8s.io", "kustomize.sigs.k8s.io", "argo-cd.readthedocs.io", "cluster-api.sigs.k8s.io", "descheduler.sigs.k8s.io", "gateway-api.sigs.k8s.io", "external-dns.sigs.k8s.io", "serviceapis.sigs.k8s.io", "image-builder.sigs.k8s.io", "kubectl.docs.kubernetes.io", "metrics-server.sigs.k8s.io", "scheduler-plugins.sigs.k8s.io", "controller-runtime.sigs.k8s.io", "prometheus-operator.sigs.k8s.io", "node-feature-discovery.sigs.k8s.io", "hierarchical-namespaces.sigs.k8s.io", "secrets-store-csi-driver.sigs.k8s.io", "security-profiles-operator.sigs.k8s.io", "cluster-proportional-autoscaler.sigs.k8s.io"];
@@ -1650,7 +1652,7 @@
 				var container = document.getElementById("server-checkboxes");
 				if (!container) return;
 				var html = "";
-				for (var i = 1; i <= 29; i++) {
+				for (var i = 1; i <= 30; i++) {
 					var srv = predefinedServers["server" + i];
 					var flagCode = serverFlags["server" + i] || "un";
 					var flagImg = '<img src="https://flagcdn.com/w40/' + flagCode + '.png" class="flag-circle" alt="' + flagCode + '">';
