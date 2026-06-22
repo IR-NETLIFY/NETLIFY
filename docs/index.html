@@ -1212,7 +1212,7 @@
 					<a href="https://github.com/IR-NETLIFY" target="_blank" style="color: inherit; text-decoration: none; cursor: pointer">IR NETLIFY Config Generator</a>
 				</div>
 				<div class="titlebar-right">
-					<div class="header-badge">V10.0.9</div>
+					<div class="header-badge">V10.0.10</div>
 				</div>
 			</div>
 			<div class="app-header">
@@ -1518,6 +1518,7 @@
 				server30: "nl",
 				server31: "us",
 				server32: "de",
+				server33: "fr",
 			};
 
 			var predefinedServers = {
@@ -1553,6 +1554,7 @@
 				server30: { name: "Hormoz", address: "198.105.112.150:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY" },
 				server31: { name: "Saint", address: "95.182.91.154:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY"},
 				server32: { name: "ArpamVpn", address: "panel.new.view.arpamstudio.com:444", path: "/ArpamVpn", user: "%40ArpamVpn"},
+				server33: { name: "ArpamVpn2", address: "panel.new.view4.arpamstudio.com:444", path: "/ArpamVpn", user: "%40ArpamVpn"},
 				
 			};
 
@@ -1657,7 +1659,7 @@
 				var container = document.getElementById("server-checkboxes");
 				if (!container) return;
 				var html = "";
-				for (var i = 1; i <= 32; i++) {
+				for (var i = 1; i <= 33; i++) {
 					var srv = predefinedServers["server" + i];
 					var flagCode = serverFlags["server" + i] || "un";
 					var flagImg = '<img src="https://flagcdn.com/w40/' + flagCode + '.png" class="flag-circle" alt="' + flagCode + '">';
