@@ -1212,7 +1212,7 @@
 					<a href="https://github.com/IR-NETLIFY" target="_blank" style="color: inherit; text-decoration: none; cursor: pointer">IR NETLIFY Config Generator</a>
 				</div>
 				<div class="titlebar-right">
-					<div class="header-badge">V10.0.10</div>
+					<div class="header-badge">V10.0.11</div>
 				</div>
 			</div>
 			<div class="app-header">
@@ -1519,6 +1519,7 @@
 				server31: "us",
 				server32: "de",
 				server33: "fr",
+				server34: "de",
 			};
 
 			var predefinedServers = {
@@ -1555,7 +1556,7 @@
 				server31: { name: "Saint", address: "95.182.91.154:444", path: "/IR-NETLIFY", user: "%40IR_NETLIFY"},
 				server32: { name: "ArpamVpn", address: "panel.new.view.arpamstudio.com:444", path: "/ArpamVpn", user: "%40ArpamVpn"},
 				server33: { name: "ArpamVpn2", address: "panel.new.view4.arpamstudio.com:444", path: "/ArpamVpn", user: "%40ArpamVpn"},
-				
+				server34: { name: "DevTaha", address: "sv.amd4team.ir:444", path: "/DeV_TaHa_1", user: "4b67f580-397c-41f1-8ae7-e6f52c09e749"},
 			};
 
 			var sharedDefaults = ["helm.sh", "keda.sh", "rook.io", "istio.io", "cilium.io", "vuejs.org", "nuxt.com", "nuxr.com", "vitejs.dev", "smashingmagazine.com", "pnpm.io", "fluxcd.io", "harbor.io", "calico.org", "linkerd.io", "openebs.io", "tekton.dev", "longhorn.io", "blog.helm.sh", "docs.helm.sh", "crossplane.io", "kubernetes.io", "kubebuilder.io", "cert-manager.io", "letsencrypt.org", "kind.sigs.k8s.io", "kops.sigs.k8s.io", "krew.sigs.k8s.io", "kwok.sigs.k8s.io", "kueue.sigs.k8s.io", "jobset.sigs.k8s.io", "kaniko.sigs.k8s.io", "minikube.sigs.k8s.io", "operatorframework.io", "container.sigs.k8s.io", "kustomize.sigs.k8s.io", "argo-cd.readthedocs.io", "cluster-api.sigs.k8s.io", "descheduler.sigs.k8s.io", "gateway-api.sigs.k8s.io", "external-dns.sigs.k8s.io", "serviceapis.sigs.k8s.io", "image-builder.sigs.k8s.io", "kubectl.docs.kubernetes.io", "metrics-server.sigs.k8s.io", "scheduler-plugins.sigs.k8s.io", "controller-runtime.sigs.k8s.io", "prometheus-operator.sigs.k8s.io", "node-feature-discovery.sigs.k8s.io", "hierarchical-namespaces.sigs.k8s.io", "secrets-store-csi-driver.sigs.k8s.io", "security-profiles-operator.sigs.k8s.io", "cluster-proportional-autoscaler.sigs.k8s.io"];
@@ -1659,7 +1660,7 @@
 				var container = document.getElementById("server-checkboxes");
 				if (!container) return;
 				var html = "";
-				for (var i = 1; i <= 33; i++) {
+				for (var i = 1; i <= 34; i++) {
 					var srv = predefinedServers["server" + i];
 					var flagCode = serverFlags["server" + i] || "un";
 					var flagImg = '<img src="https://flagcdn.com/w40/' + flagCode + '.png" class="flag-circle" alt="' + flagCode + '">';
